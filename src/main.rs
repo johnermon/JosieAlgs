@@ -36,8 +36,8 @@ fn longest_nonrepeating_substring(input: &'static str) {
     //the range in the string where the longest substring lives
     let mut longest_substring_index: Range<usize> = 0..0;
     //curr substring is the index of the current substring loaded in memory
-    let mut curr_substring: usize = 0; //github.com/johnermon/JosieAlgs/blob/master/src/main.rs
-                                       //array containing optional instances of the last index where each character was seen
+    let mut curr_substring: usize = 0
+    //array containing optional instances of the last index where each character was seen
     let mut char_indexes: [Option<usize>; 128] = [None; 128];
     //iterates from zero until the length of the input string
     for i in 0..input.len() {
