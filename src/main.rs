@@ -11,15 +11,21 @@ fn main() {
 fn sum_indexes(target: u32, input: &[u32]) {
     //numbers is a hashmap of all numbers so far along with
     let mut numbers = HashMap::new();
+    //this is the pair of numbers which add up to the target
     let mut pair = (0, 0);
-    for i in 0..input.len() {
-        let curr = input[i];
+    //iterates through the entire list and enumerates list
+    for (i, &curr) in input.iter().enumerate() {
+        //lets the complement of the current number be the target value minus the curent
         let complement = target - curr;
+        //pulls the index of the complement out of the hashmap
         let complement_index = numbers.get(&complement);
+        //if the index exists in the hashmap break the loop and set the pair to be equal to the
+        //inex and the current index
         if let Some(index) = complement_index {
             pair = (*index, i);
             break;
         }
+        //inserts current index into the hashmap
         numbers.insert(curr, i);
     }
     println!("the index of the sum is {:?}", pair);
@@ -30,8 +36,8 @@ fn longest_nonrepeating_substring(input: &'static str) {
     //the range in the string where the longest substring lives
     let mut longest_substring_index: Range<usize> = 0..0;
     //curr substring is the index of the current substring loaded in memory
-    let mut curr_substring: usize = 0;
-    //array containing optional instances of the last index where each character was seen
+    let mut curr_substring: usize = 0; //github.com/johnermon/JosieAlgs/blob/master/src/main.rs
+                                       //array containing optional instances of the last index where each character was seen
     let mut char_indexes: [Option<usize>; 128] = [None; 128];
     //iterates from zero until the length of the input string
     for i in 0..input.len() {
