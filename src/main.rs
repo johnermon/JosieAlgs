@@ -46,9 +46,7 @@ fn longest_nonrepeating_substring(input: &'static str) {
         //char index is a mutable reference to the index in the array where the current ascii character is located at
         let char_index = &mut char_indexes[index];
         //checks if the character currently exists in the charindexes index, and if that character is at a greater than or equal index to the curr substring index
-        if let Some(char) = *char_index
-            && char >= curr_substring
-        {
+        if let Some(char) = *char_index && char >= curr_substring {
             //checks if the current substring is longer than the previous max substring. if so sets max substring to be equal to current substring
             if i - curr_substring > longest_substring_index.end - longest_substring_index.start {
                 longest_substring_index = curr_substring..i;
