@@ -5,30 +5,46 @@ fn main() {
     sum_indexes(10, &input);
     let input: &'static str = "aloikjhjasdfyhui iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
     longest_nonrepeating_substring(input);
-    valid_parentheses("{(])}");
+    valid_parentheses("{([)]}");
 }
 
+///Parses input string to look for pairs. worst case scenerio this could be a very slow algorithm,
+///however in most use cases where there are roughly evenly spaced brackets it is more than fast
+///enough. mem copy operations in most cases you only need to copy a couple elements and check a
+///couple elements behind in the vector, Importantly, each time a match is found the element is
+///removed from the stack
 fn valid_parentheses(input: &'static str) {
+    //creates vector to hold all the parentheses
     let mut stack: Vec<char> = Vec::with_capacity(input.len());
+    //outer for loop iterates through all the characters in the string
     'outer: for curr_char in input.chars() {
+        //if the current character is any type of open parentheses then push it to the stack, then
+        //continues at the beginning of the loop
         if curr_char == '(' || curr_char == '{' || curr_char == '[' {
             stack.push(curr_char);
             continue;
         }
+        //if it is any close brackets match to the proper open brackets, else continue
         let open_bracets = match curr_char {
             ')' => '(',
             '}' => '{',
             ']' => '[',
             _ => continue,
         };
+        //iterates backwards through the stack looking for the open brackets. if found, removes at
+        //that index and continues the outer for loop
         for i in (0..stack.len()).rev() {
             if open_bracets == stack[i] {
                 let _ = stack.remove(i);
                 continue 'outer;
             }
         }
-        break 'outer;
+        //if the for loop is ever completed, that means no open brackets were found, immediately
+        //failing tests
+        break;
     }
+    //checks on exit if there are any items left in the stack that means that there are unclosed
+    //brackets: fail.
     if stack.last().is_none() {
         println!("Valid Input");
     } else {
