@@ -8,7 +8,6 @@
 #include <tuple>
 
 using std::array;
-using std::cout;
 using std::get;
 using std::make_tuple;
 using std::nullopt;
