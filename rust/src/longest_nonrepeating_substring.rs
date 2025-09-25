@@ -1,6 +1,6 @@
 use std::ops::Range;
 
-pub fn longest_nonrepeating_substring(input: &'static str) {
+pub fn longest_nonrepeating_substring(input: &'static str) -> &'static str{
     //the range in the string where the longest substring lives
     let mut longest_substring_index: Range<usize> = 0..0;
     //curr substring is the index of the current substring loaded in memory
@@ -27,9 +27,5 @@ pub fn longest_nonrepeating_substring(input: &'static str) {
         //sets the current index to some(i)
         *char_index = Some(i)
     }
-    //prints out the longest substring
-    println!(
-        "Longest Unique Substring is {:?}",
         &input[longest_substring_index]
-    );
 }
