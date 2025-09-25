@@ -20,7 +20,6 @@ inline string_view longest_nonrepeating_substring(string_view input) {
   size_t curr_substring_index = 0;
   array<std::optional<size_t>, 128> char_indexes;
   char_indexes.fill(nullopt);
-  ;
   for (size_t i = 0; i < input.size(); i++) {
     char curr = input[i];
     auto &char_index = char_indexes[curr];
