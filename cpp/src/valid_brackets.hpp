@@ -6,7 +6,7 @@ using std::optional;
 using std::string_view;
 using std::vector;
 
-inline bool valid_brackets(string_view input) {
+inline bool valid_intersecting_brackets(string_view input) {
   vector<char> stack;
   for (char curr : input) {
     if (curr == '(' || curr == '{' || curr == '[' || curr == '<') {
