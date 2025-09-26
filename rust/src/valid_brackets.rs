@@ -3,7 +3,7 @@
 ///enough. mem copy operations in most cases you only need to copy a couple elements and check a
 ///couple elements behind in the vector, Importantly, each time a match is found the element is
 ///removed from the stack
-pub fn valid_brackets(input: &'static str) -> bool {
+pub fn valid_intersecting_brackets(input: &'static str) -> bool {
     //creates stack, vector with capacity of the input length
     let mut stack = Vec::with_capacity(input.len());
     //iterates through the input string as chars
