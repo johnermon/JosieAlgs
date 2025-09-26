@@ -19,7 +19,7 @@ int main() {
   cout << out << '\n';
   array strings = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
   for (string_view string : strings) {
-    if (valid_brackets(string)) {
+    if (valid_intersecting_brackets(string)) {
       cout << string << " is a valid input\n";
     } else {
       cout << string << " is not a valid input\n";
