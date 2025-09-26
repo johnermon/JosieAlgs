@@ -14,7 +14,7 @@ fn main() {
     println!("{out}");
     let strings: [&str; _] = ["{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"];
     for string in strings {
-        if valid_brackets(string) {
+        if valid_intersecting_brackets(string) {
             println!("{} is a valid input", string);
         } else {
             println!("{} is an invalid input", string);
