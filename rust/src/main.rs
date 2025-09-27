@@ -1,10 +1,10 @@
 pub mod longest_nonrepeating_substring;
 pub mod two_sum;
-pub mod valid_brackets;
+pub mod valid_intersecting_brackets;
 
 use longest_nonrepeating_substring::longest_nonrepeating_substring;
 use two_sum::two_sum;
-use valid_brackets::valid_brackets;
+use valid_intersecting_brackets::valid_intersecting_brackets;
 
 fn main() {
     let input: [u32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
