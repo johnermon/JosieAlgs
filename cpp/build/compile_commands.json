@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/Users/josiekrische/Documents/code/JosieAlgs/cpp/build",
-  "command": "/usr/bin/c++ -g -std=c++2b -arch arm64 -o CMakeFiles/JosieAlgs.dir/src/main.cpp.o -c /Users/josiekrische/Documents/code/JosieAlgs/cpp/src/main.cpp",
-  "file": "/Users/josiekrische/Documents/code/JosieAlgs/cpp/src/main.cpp",
-  "output": "/Users/josiekrische/Documents/code/JosieAlgs/cpp/build/CMakeFiles/JosieAlgs.dir/src/main.cpp.o"
-}
-]
