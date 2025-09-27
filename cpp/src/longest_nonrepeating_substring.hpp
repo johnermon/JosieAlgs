@@ -25,7 +25,7 @@ inline string_view longest_nonrepeating_substring(string_view input) {
   // iterates through the input string and yields an iterated value and the char
   // at the current index, uses curr to get a reference to the last instance
   for (auto [i, curr] : zip(iota(size_t{0}), input)) {
-    auto &char_index = char_indexes[(unsigned)curr];
+    auto &char_index = char_indexes[(size_t)curr];
     // checks to make sure that the current index has if so that value is later
     // than the index of the start of the current substring
     if (char_index.has_value() && char_index >= curr_start) {
