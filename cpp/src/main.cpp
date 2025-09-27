@@ -12,13 +12,13 @@ using std::string_view;
 
 int main() {
   // creates new input string
-  string_view input = "aloikjhjasdfyhui "
-                      "iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"
-                      "dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
+  string_view input =
+      "aloikjhjasdfyhuiiouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"
+      "dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
 
   // returns longest nonrepeating substring and store
   string_view out = longest_nonrepeating_substring(input);
-  cout << out << '\n';
+  cout << "\nlongest substring is:\n" << out << "\n\n";
 
   array strings = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
 

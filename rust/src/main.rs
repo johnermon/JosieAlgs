@@ -10,7 +10,7 @@ fn main() {
     let input: [u32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
     two_sum(10, &input);
     let input: &'static str = "aloikjhjasdfyhui iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
-    let out:&'static str = longest_nonrepeating_substring(input);
+    let out: &'static str = longest_nonrepeating_substring(input);
     println!("{out}");
     let strings: [&str; _] = ["{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"];
     for string in strings {
