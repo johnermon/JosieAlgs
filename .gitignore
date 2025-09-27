@@ -1,0 +1,9 @@
+#build stuff
+.DS_Store
+
+cpp/build/
+cpp/compile_commands.json
+cpp/.cache/
+
+rust/target/
+rust/cargo.lock
