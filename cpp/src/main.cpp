@@ -1,6 +1,6 @@
 // header files containing my functions
 #include "longest_nonrepeating_substring.hpp"
-#include "valid_brackets.hpp"
+#include "valid_intersecting_brackets.hpp"
 // library imports
 #include <array>
 #include <iostream>
@@ -11,17 +11,24 @@ using std::cout;
 using std::string_view;
 
 int main() {
+  // creates new input string
   string_view input = "aloikjhjasdfyhui "
                       "iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"
                       "dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
 
+  // returns longest nonrepeating substring and store
   string_view out = longest_nonrepeating_substring(input);
   cout << out << '\n';
+
   array strings = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
+
   for (string_view string : strings) {
+
     if (valid_intersecting_brackets(string)) {
       cout << string << " is a valid input\n";
-    } else {
+    }
+
+    else {
       cout << string << " is not a valid input\n";
     }
   }
