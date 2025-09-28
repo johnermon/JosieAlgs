@@ -1,5 +1,5 @@
 # #build stuff
-.DS_Store
+**/.DS_Store
 
 cpp/build/
 cpp/compile_commands.json
