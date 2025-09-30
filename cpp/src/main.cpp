@@ -1,16 +1,20 @@
 // header files containing my functions
 #include "longest_nonrepeating_substring.hpp"
+#include "two_sum.hpp"
 #include "valid_intersecting_brackets.hpp"
 // library imports
 #include <array>
-#include <iostream>
+#include <print>
 #include <string_view>
 
 using std::array;
-using std::cout;
+using std::println;
 using std::string_view;
 
 int main() {
+  array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
+  auto [first, second] = two_sum(10, (span<int>)numbers);
+  println("The indexes of sum are {} and {}\n", first, second);
   // creates new input string
   string_view input =
       "aloikjhjasdfyhuiiouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"
@@ -18,18 +22,15 @@ int main() {
 
   // returns longest nonrepeating substring and store
   string_view out = longest_nonrepeating_substring(input);
-  cout << "\nlongest substring is:\n" << out << "\n\n";
-
+  println("longest substring is:\n{}\n", out);
   array strings = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
 
   for (string_view string : strings) {
 
     if (valid_intersecting_brackets(string)) {
-      cout << string << " is a valid input\n";
-    }
-
-    else {
-      cout << string << " is not a valid input\n";
+      println("{} is a valid input", string);
+    } else {
+      println("{} is a invalid input", string);
     }
   }
 }

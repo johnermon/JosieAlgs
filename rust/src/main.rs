@@ -7,11 +7,13 @@ use two_sum::two_sum;
 use valid_intersecting_brackets::valid_intersecting_brackets;
 
 fn main() {
-    let input: [u32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
-    two_sum(10, &input);
+    let numbers: [i32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
+    let (first, second) = two_sum(10, &numbers);
+    println!("The indexes of sum are {} and {}\n", first, second);
+
     let input: &'static str = "aloikjhjasdfyhui iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
     let out: &'static str = longest_nonrepeating_substring(input);
-    println!("{out}");
+    println!("longest substring is: \n{out}\n");
     let strings: [&str; _] = ["{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"];
     for string in strings {
         if valid_intersecting_brackets(string) {
