@@ -2,18 +2,14 @@
 **/.DS_Store
 
 #c build stuff
-cpp/build/
-cpp/compile_commands.json
 cpp/.cache/
 cpp/.cmake/
-cpp/CMakeFiles
-cpp/CMakeCache.txt
-cpp/build.ninja
-cpp/cmake_install.cmake
-cpp/.ninja_deps
-cpp/.ninja_log
-cpp/JosieAlgs
+cpp/build/
+compile_commands.json
 
 #rust target and cargo lock
 rust/target/
 rust/cargo.lock
+
+#python stuff to ignore
+python/src/__pycache__
