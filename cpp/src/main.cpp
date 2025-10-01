@@ -13,8 +13,13 @@ using std::string_view;
 
 int main() {
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
-  auto [first, second] = two_sum(10, (span<int>)numbers);
-  println("The indexes of sum are {} and {}\n", first, second);
+  auto sum = two_sum(10, (span<int>)numbers);
+  if (sum.has_value()) {
+    println("the indexes of sum are {} and {}", sum->first, sum->second);
+  } else {
+    println("there is no pair of numbers that equal to target");
+  }
+
   // creates new input string
   string_view input =
       "aloikjhjasdfyhuiiouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"

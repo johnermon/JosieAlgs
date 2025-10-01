@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 ///Looks for the indexes in an array where both add up to the target value
-pub fn two_sum(target: i32, input: &[i32]) -> (usize, usize) {
+pub fn two_sum(target: i32, input: &[i32]) -> Option<(usize, usize)> {
     //numbers is a hashmap of all numbers so far along with
     let mut numbers = HashMap::new();
     //iterates through the entire list and enumerates list
@@ -13,10 +13,10 @@ pub fn two_sum(target: i32, input: &[i32]) -> (usize, usize) {
         //if the index exists in the hashmap break the loop and set the pair to be equal to the
         //inex and the current index
         if let Some(complement_index) = complement_index {
-            return (*complement_index, i);
+            return Some((*complement_index, i));
         }
         //inserts current index into the hashmap
         numbers.insert(curr, i);
     }
-    (0, 0)
+    None
 }

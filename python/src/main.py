@@ -4,8 +4,12 @@ from .two_sum import two_sum
 
 def main():
     numbers = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19]
-    [first, second] = two_sum(10, numbers)
-    print(f"The indexes of sum are {first} and {second}\n")
+    sum = two_sum(10, numbers)
+    if sum != None:
+        [first, second] = sum
+        print(f"The indexes of sum are {first} and {second}\n")
+    else:
+        print("there is no pair of numbers that equal to target")
 
     input = "aloikjhjasdfyhuiiouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
     output = longest_nonrepeating_substring(input)
