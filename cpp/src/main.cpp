@@ -12,6 +12,8 @@ using std::println;
 using std::string_view;
 
 int main() {
+  println("Hello from C++!");
+
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
   auto sum = two_sum(10, (span<int>)numbers);
   if (sum.has_value()) {

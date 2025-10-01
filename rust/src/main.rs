@@ -7,6 +7,7 @@ use two_sum::two_sum;
 use valid_intersecting_brackets::valid_intersecting_brackets;
 
 fn main() {
+    println!("Hello from Rust!");
     let numbers: [i32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
     //rust syntax is so much more expressive than all the other languages, all this functionality
     //in one line of code when all the other languages were more verbose... amazing
@@ -15,8 +16,10 @@ fn main() {
     } else {
         println!("there is no pair of numbers that equal to target")
     }
+
     let input: &'static str = "aloikjhjasdfyhui iouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
     let out: &'static str = longest_nonrepeating_substring(input);
+
     println!("longest substring is: \n{out}\n");
     let strings: [&str; _] = ["{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"];
     for string in strings {
