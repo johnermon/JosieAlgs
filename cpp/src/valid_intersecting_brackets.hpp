@@ -1,10 +1,15 @@
 #pragma once
+
 #include <optional>
+#include <ranges>
 #include <string_view>
 #include <vector>
+
 using std::optional;
 using std::string_view;
 using std::vector;
+using std::views::iota;
+using std::views::zip;
 
 inline bool valid_intersecting_brackets(string_view input) {
   vector<char> stack;
@@ -30,8 +35,8 @@ inline bool valid_intersecting_brackets(string_view input) {
     default:
       continue;
     }
-    for (size_t i = stack.size(); i-- > 0;) {
-      if (stack[i] == open) {
+    for (auto [i, curr] : zip(iota(0), stack)) {
+      if (curr == open) {
         stack.erase(stack.begin() + i);
         goto continue_outer;
       }

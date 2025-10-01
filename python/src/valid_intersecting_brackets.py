@@ -20,8 +20,8 @@ def valid_intersecting_brackets(input:str) -> bool:
                 continue
 
         countinue_outer = False
-        for i, char in enumerate(stack):
-            if open == char:
+        for i, curr in enumerate(stack):
+            if open == curr:
                 countinue_outer = True
                 stack.pop(i)
                 break
