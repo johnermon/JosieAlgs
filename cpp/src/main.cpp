@@ -1,9 +1,11 @@
 // header files containing my functions
 #include "longest_nonrepeating_substring.hpp"
+#include "reverse_linked_list.hpp"
 #include "two_sum.hpp"
 #include "valid_intersecting_brackets.hpp"
 // library imports
 #include <array>
+#include <cstddef>
 #include <print>
 #include <string_view>
 
@@ -13,6 +15,17 @@ using std::string_view;
 
 int main() {
   println("Hello from C++!");
+  auto list = JoiseLinkedList<int>();
+  for (int i = 0; i <= 10; i++) {
+    list.push_back(i);
+  }
+  for (auto i : list) {
+    println("{}", i);
+  }
+  list.reverse();
+  for (auto i : list) {
+    println("{}", i);
+  }
 
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
   auto sum = two_sum(10, (span<int>)numbers);
@@ -32,7 +45,6 @@ int main() {
   array strings = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
 
   for (string_view string : strings) {
-
     if (valid_intersecting_brackets(string)) {
       println("{} is a valid input", string);
     } else {
