@@ -24,7 +24,7 @@ pub fn valid_intersecting_brackets(input: &'static str) -> bool {
         };
         //iterate backwards through stack backwards until you find the correct bracket.
         //once found remove it and continue the outer loop
-        for (i, curr) in stack.iter().enumerate() {
+        for (i, curr) in stack.iter().enumerate().rev() {
             if open == *curr {
                 let _ = stack.remove(i);
                 continue 'outer;

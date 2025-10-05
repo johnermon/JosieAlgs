@@ -1,4 +1,5 @@
 pub mod longest_nonrepeating_substring;
+pub mod reverse_linked_list;
 pub mod two_sum;
 pub mod valid_intersecting_brackets;
 
@@ -6,8 +7,22 @@ use longest_nonrepeating_substring::longest_nonrepeating_substring;
 use two_sum::two_sum;
 use valid_intersecting_brackets::valid_intersecting_brackets;
 
+use crate::reverse_linked_list::JosieLinkedList;
+
 fn main() {
-    println!("Hello from Rust!");
+    let mut list = JosieLinkedList::new();
+    for i in 0..=10 {
+        list.push_back(i);
+    }
+
+    for i in list.iter() {
+        println!("{i}");
+    }
+
+    list.reverse();
+    for i in list.iter() {
+        println!("{i}");
+    }
     let numbers: [i32; _] = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19];
     //rust syntax is so much more expressive than all the other languages, all this functionality
     //in one line of code when all the other languages were more verbose... amazing

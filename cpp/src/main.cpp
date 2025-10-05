@@ -22,7 +22,6 @@ int main() {
     println("there is no pair of numbers that equal to target");
   }
 
-  // creates new input string
   string_view input =
       "aloikjhjasdfyhuiiouehjfgopwq;ewrdfgjwqdp[ovmwpeoirkjfvcwq;olkdjvsa;"
       "dlqwertyuiopaSDFGHJKLkgjkfs[v[vqerpokrvfg";
