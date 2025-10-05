@@ -31,20 +31,20 @@ public:
 
   void push_back(T element) {
     auto segment = JosieLinkedListSegment<T>::create(element);
+    length++;
     if (list == nullptr) {
       list = segment;
       tail_pointer = segment;
       return;
     }
-    length++;
     tail_pointer->ptr = segment;
     tail_pointer = segment;
   }
   void push_front(T element) {
     auto segment = JosieLinkedListSegment<T>::create(element);
+    length++;
     auto curr = list;
     list = segment;
-    length++;
     list->ptr = curr;
   }
   void reverse() {
