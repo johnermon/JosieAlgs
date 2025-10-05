@@ -5,7 +5,7 @@ use std::{
 
 pub struct JosieLinkedList<T> {
     list: *mut JosieLinkedListSegment<T>,
-    len: usize,
+    length: usize,
     tail_ptr: *mut JosieLinkedListSegment<T>,
 }
 
@@ -42,7 +42,7 @@ impl<T> JosieLinkedListSegment<T> {
             ptr =
                 alloc(Layout::new::<JosieLinkedListSegment<T>>()) as *mut JosieLinkedListSegment<T>;
             ptr.is_null().then(|| panic!("Alloc failed"));
-            ptr.write(segment);
+            *ptr = segment;
         }
         ptr
     }
@@ -56,7 +56,7 @@ impl<T> JosieLinkedList<T> {
     pub fn push_back(&mut self, element: T) {
         let segment = JosieLinkedListSegment::new(element);
 
-        self.len += 1;
+        self.length += 1;
         if self.list.is_null() {
             self.list = segment;
             self.tail_ptr = segment;
@@ -71,6 +71,7 @@ impl<T> JosieLinkedList<T> {
 
     pub fn push_front(&mut self, element: T) {
         let segment = JosieLinkedListSegment::new(element);
+        self.length += 1;
         let list = self.list;
         self.list = segment;
         unsafe {
@@ -109,11 +110,11 @@ impl<T> JosieLinkedList<T> {
     }
 
     pub const fn len(&self) -> usize {
-        self.len
+        self.length
     }
 
     pub const fn is_empty(&self) -> bool {
-        self.len == 0
+        self.length == 0
     }
 }
 
@@ -161,7 +162,7 @@ impl<T> Default for JosieLinkedList<T> {
     fn default() -> Self {
         Self {
             list: ptr::null_mut(),
-            len: 0,
+            length: 0,
             tail_ptr: ptr::null_mut(),
         }
     }

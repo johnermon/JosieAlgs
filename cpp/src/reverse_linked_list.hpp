@@ -24,10 +24,10 @@ template <typename T> class JoiseLinkedList {
 private:
   JosieLinkedListSegment<T> *list;
   JosieLinkedListSegment<T> *tail_pointer;
-  size_t len;
+  size_t length;
 
 public:
-  JoiseLinkedList() : list(nullptr), tail_pointer(nullptr), len(0) {}
+  JoiseLinkedList() : list(nullptr), tail_pointer(nullptr), length(0) {}
 
   void push_back(T element) {
     auto segment = JosieLinkedListSegment<T>::create(element);
@@ -36,7 +36,7 @@ public:
       tail_pointer = segment;
       return;
     }
-    len++;
+    length++;
     tail_pointer->ptr = segment;
     tail_pointer = segment;
   }
@@ -44,7 +44,7 @@ public:
     auto segment = JosieLinkedListSegment<T>::create(element);
     auto curr = list;
     list = segment;
-    len++;
+    length++;
     list->ptr = curr;
   }
   void reverse() {
@@ -60,6 +60,10 @@ public:
     }
     list = reversed;
   }
+  size_t len() { return length; }
+
+  bool is_empty() { return 0 == length; }
+
   class Iterator {
     JosieLinkedListSegment<T> *current;
 

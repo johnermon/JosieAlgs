@@ -10,6 +10,7 @@ use valid_intersecting_brackets::valid_intersecting_brackets;
 use crate::reverse_linked_list::JosieLinkedList;
 
 fn main() {
+    print!("Hello from Rust!");
     let mut list = JosieLinkedList::new();
     for i in 0..=10 {
         list.push_back(i);
