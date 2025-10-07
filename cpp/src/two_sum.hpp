@@ -1,5 +1,4 @@
 #pragma once
-
 #import <optional>
 #import <ranges>
 #import <span>
