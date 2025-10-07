@@ -1,21 +1,28 @@
 #pragma once
 
 #include <cstddef>
-#include <exception>
 #include <iostream>
 #include <random>
 #include <span>
 #include <stdexcept>
 #include <thread>
-#include <utility>
 
 using std::cout;
 using std::span;
 using std::swap;
 using std::this_thread::sleep_for;
+
 using namespace std::chrono_literals;
 
 typedef enum { Red, White, Blue, count } Color;
+
+inline Color random_color() {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dist(0,
+                                          static_cast<int>(Color::count) - 1);
+  return static_cast<Color>(dist(gen));
+}
 
 class DutchFlagPrinter {
 private:
@@ -26,7 +33,7 @@ public:
 
   void reset(span<Color> data) {
     column = 0;
-    for (int i = 0; i < data.size(); i++) {
+    for (int i = 0; i <= data.size(); i++) {
       cout << "\n";
     }
   }
@@ -50,39 +57,38 @@ public:
     cout << "\033[0m";
   }
 
+  static void del_line(span<Color> data, size_t column) {
+    cout << "\033[" << data.size() << "A";
+    cout << "\n\033[" << 2 * column << "C";
+    for (int i = 0; i < data.size(); i++) {
+      cout << "  \033[B\033[2D";
+    }
+  }
+
   void print_line(span<Color> data) {
     write_line(data, column);
     column++;
   }
 
-  void reverse_print_line(span<Color> data) {
-    column--;
-    write_line(data, column);
-  }
-
   void print_flag_animation(span<Color> data) {
-    size_t start = column;
-
-    while (column <= 3 * data.size() / 2) {
+    size_t max = 3 * data.size() / 2;
+    while (column > max) {
+      column--;
+      del_line(data, column);
+      sleep_for(20ms);
+    }
+    while (column <= max) {
       print_line(data);
-      sleep_for(50ms);
+      sleep_for(20ms);
     }
 
-    column = start;
     while (column > 0) {
-      reverse_print_line(data);
-      sleep_for(50ms);
+      column--;
+      write_line(data, column);
+      sleep_for(20ms);
     }
   }
 };
-
-inline Color random_color() {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  std::uniform_int_distribution<int> dist(0,
-                                          static_cast<int>(Color::count) - 1);
-  return static_cast<Color>(dist(gen));
-}
 
 inline void sort_dutch_flag(span<Color> input) {
   size_t begin = 0;

@@ -51,7 +51,7 @@ int main() {
 
   println("\nTwo sum\n");
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
-  println("Input is: \n[");
+  cout << "Input is: \n[";
   for (auto i : numbers) {
     cout << i << ", ";
   }
