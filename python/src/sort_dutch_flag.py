@@ -34,24 +34,32 @@ class DutchFlagPrinter:
 
         print("\033[0m", end = "")
     
+    def del_line(self, data:list[Color], column:int):
+        print(f"\033[{len(data)}A")
+        print(f"\033[{2*column}C", end = "")
+        for _ in range(len(data)):
+            print("  \033[B\033[2D", end = "")
+
     def print_line(self, data:list[Color]):
         self.write_line(data, self.column)
         self.column +=1;
 
-    def reverse_print_line(self, data:list[Color]):
-        self.column -=1;
-        self.write_line(data, self.column)
-
     def print_flag_animation(self, data:list[Color]):
-        start = self.column
-        while self.column <= 3*len(data)//2:
-            self.print_line(data)
-            sleep(0.05)
+        max = 3*len(data)//2
 
-        self.column = start
+        while self.column > max:
+            self.del_line(data, self.column)
+            self.column-=1
+            sleep(0.02)
+
+        while self.column <= max:
+            self.print_line(data)
+            sleep(0.02)
+
         while self.column > 0:
-            self.reverse_print_line(data)
-            sleep(0.05)
+            self.column -=1
+            self.write_line(data, self.column)
+            sleep(0.02)
 
 def sort_dutch_flag(input:list[Color]):
     begin:int = 0
