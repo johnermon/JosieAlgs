@@ -12,35 +12,34 @@ using std::swap;
 using std::this_thread::sleep_for;
 using namespace std::chrono_literals;
 
-typedef enum { red, white, blue } color;
+typedef enum { Red, White, Blue } Color;
 
-class dutch_flag_printer {
+class DutchFlagPrinter {
 private:
   size_t column;
-  span<color> data;
 
 public:
-  dutch_flag_printer(span<color> data) : data(data) { reset(); }
+  DutchFlagPrinter(span<Color> data) { reset(data); }
 
-  void reset() {
+  void reset(span<Color> data) {
     column = 0;
     for (int i = 0; i < data.size(); i++) {
       cout << "\n";
     }
   }
 
-  void print_line() {
-    cout << "\033[" << data.size() - 1 << "A" << std::flush;
+  void print_line(span<Color> data) {
+    cout << "\033[" << data.size() - 1 << "A";
     cout << "\n\033[" << 2 * column << "C";
-    for (int i : data) {
-      switch (i) {
-      case red:
+    for (int color : data) {
+      switch (color) {
+      case Red:
         cout << "\033[48;2;173;29;37m  \033[B\033[2D";
         break;
-      case white:
+      case White:
         cout << "\033[48;2;255;255;255m  \033[B\033[2D";
         break;
-      case blue:
+      case Blue:
         cout << "\033[48;2;30;71;133m  \033[B\033[2D";
         break;
       }
@@ -49,32 +48,34 @@ public:
     cout << "\033[0m";
   }
 
-  void print_flag() {
-    reset();
+  void print_flag(span<Color> data) {
+    reset(data);
     for (size_t i = 0; i <= (3 * data.size() / 2); i++) {
-      print_line();
+      print_line(data);
     }
   }
 };
 
-inline void sort_dutch_flag(span<color> input) {
+inline void sort_dutch_flag(span<Color> input) {
   size_t begin = 0;
   size_t end = input.size() - 1;
   size_t curr = 0;
 
   // dutch flag printer class prints dutch flag
-  auto flag_printer = dutch_flag_printer(input);
+  auto flag_printer = DutchFlagPrinter(input);
   while (curr < end) {
-    flag_printer.print_line();
+
+    flag_printer.print_line(input);
+
     switch (input[curr]) {
-    case white:
+    case White:
       curr++;
       break;
-    case blue:
+    case Blue:
       swap(input[curr], input[end]);
       end--;
       break;
-    case red:
+    case Red:
       swap(input[curr], input[begin]);
       begin++;
       break;
@@ -83,6 +84,6 @@ inline void sort_dutch_flag(span<color> input) {
   }
 
   cout << "\n\n\033[1mGOD BLESS THE DUTCH \033[0m\n";
-  flag_printer.print_flag();
+  flag_printer.print_flag(input);
   cout << "\n";
 }

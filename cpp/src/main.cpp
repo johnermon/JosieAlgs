@@ -20,7 +20,7 @@ using std::string_view;
 int main() {
   println("Hello from C++!\n");
   println("Reverse a linked list\n");
-  println("contents");
+  println("Contents");
   auto list = JoiseLinkedList<int>();
   for (int i = 0; i <= 10; i++) {
     list.push_back(i);
@@ -40,10 +40,10 @@ int main() {
   cout << "\n\n";
 
   println("Sort Dutch Flag");
-  array scrambled_flag = {white, red,   red,  blue,  blue,  red,
-                          white, white, blue, blue,  white, white,
-                          red,   red,   blue, white, white};
-  sort_dutch_flag((span<color>)scrambled_flag);
+  array scrambled_flag = {White, Red,   Red,  Blue,  Blue,  Red,
+                          White, White, Blue, Blue,  White, White,
+                          Red,   Red,   Blue, White, White};
+  sort_dutch_flag((span<Color>)scrambled_flag);
 
   println("\nTwo sum\n");
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
