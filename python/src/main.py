@@ -3,30 +3,18 @@ from .valid_intersecting_brackets import valid_intersecting_brackets
 from .two_sum import two_sum
 from .sort_dutch_flag import *
 
+import random
+
 def main():
     print("\nHello from Python!\n")
 
     print("Sort dutch flag")
-    scrambeled_flag = [
-        Color.White,
-        Color.Red,
-        Color.Red,
-        Color.Blue,
-        Color.Blue,
-        Color.Red,
-        Color.White,
-        Color.White,
-        Color.Blue,
-        Color.Blue,
-        Color.White,
-        Color.White,
-        Color.Red,
-        Color.Red,
-        Color.Blue,
-        Color.White,
-        Color.White
-    ];
-    sort_dutch_flag(scrambeled_flag)
+
+    scrambled_flag:list[Color]= []
+    for _ in range(20):
+        scrambled_flag.append(random.choice(list(Color)))
+
+    sort_dutch_flag(scrambled_flag)
 
     print("\nTwo sum\n")
     numbers = [1, 2, 5, 7, 4, 5, 0, 49, 29, 19]

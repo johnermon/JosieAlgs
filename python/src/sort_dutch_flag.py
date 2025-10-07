@@ -2,9 +2,9 @@ from enum import Enum
 from time import sleep
 
 class Color(Enum):
-    Red = 1,
-    White = 2,
-    Blue = 3,
+    Red = 0,
+    White = 1,
+    Blue = 2,
 
 class DutchFlagPrinter:
     def __init__(self, data:list[Color]):
@@ -56,10 +56,11 @@ class DutchFlagPrinter:
 def sort_dutch_flag(input:list[Color]):
     begin:int = 0
     end:int = len(input) - 1
-    curr:int = 0
 
     flag_printer:DutchFlagPrinter = DutchFlagPrinter(input)
-    while curr < end:
+
+    curr:int = begin
+    while curr <= end:
         flag_printer.print_line(input)
         match input[curr]:
             case Color.White:
@@ -67,11 +68,14 @@ def sort_dutch_flag(input:list[Color]):
 
             case Color.Blue:
                 input[curr], input[end] = input[end], input[curr]
-                end -=1
+                while input[end] == Color.Blue:
+                    end-=1
 
             case Color.Red:
                 input[curr], input[begin] = input[begin], input[curr]
-                begin +=1
+                while input[begin] == Color.Red:
+                    begin+=1
+                curr = begin
         sleep(0.05)
     flag_printer.print_flag_animation(input)
     print("\n\n\033[1mGOD BLESS THE DUTCH \033[0m")

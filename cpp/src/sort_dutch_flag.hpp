@@ -1,8 +1,11 @@
 #pragma once
 
 #include <cstddef>
+#include <exception>
 #include <iostream>
+#include <random>
 #include <span>
+#include <stdexcept>
 #include <thread>
 #include <utility>
 
@@ -12,7 +15,7 @@ using std::swap;
 using std::this_thread::sleep_for;
 using namespace std::chrono_literals;
 
-typedef enum { Red, White, Blue } Color;
+typedef enum { Red, White, Blue, count } Color;
 
 class DutchFlagPrinter {
 private:
@@ -73,6 +76,14 @@ public:
   }
 };
 
+inline Color random_color() {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dist(0,
+                                          static_cast<int>(Color::count) - 1);
+  return static_cast<Color>(dist(gen));
+}
+
 inline void sort_dutch_flag(span<Color> input) {
   size_t begin = 0;
   size_t end = input.size() - 1;
@@ -80,7 +91,7 @@ inline void sort_dutch_flag(span<Color> input) {
 
   // dutch flag printer class prints dutch flag
   auto flag_printer = DutchFlagPrinter(input);
-  while (curr < end) {
+  while (curr <= end) {
 
     flag_printer.print_line(input);
 
@@ -88,14 +99,23 @@ inline void sort_dutch_flag(span<Color> input) {
     case White:
       curr++;
       break;
+
     case Blue:
       swap(input[curr], input[end]);
-      end--;
+      while (input[end] == Blue) {
+        end--;
+      }
       break;
+
     case Red:
       swap(input[curr], input[begin]);
-      begin++;
+      while (input[begin] == Red) {
+        begin++;
+      }
+      curr = begin;
       break;
+    case count:
+      throw std::runtime_error("somehow count enum made it into the vector");
     }
     sleep_for(50ms);
   }

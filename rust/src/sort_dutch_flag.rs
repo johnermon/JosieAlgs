@@ -1,9 +1,22 @@
+use rand::Rng;
 use std::time::Duration;
 
+#[derive(PartialEq)]
 pub enum Color {
     Red,
     White,
     Blue,
+}
+
+impl Color {
+    pub fn random() -> Self {
+        match rand::rng().random_range(0..=2) {
+            0 => Color::Red,
+            1 => Color::White,
+            2 => Color::Blue,
+            _ => panic!("rng generated wrong type"),
+        }
+    }
 }
 
 struct DutchFlagPrinter {
@@ -67,17 +80,22 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
 
     let mut flag_printer = DutchFlagPrinter::new(input);
 
-    while curr < end {
+    while curr <= end {
         flag_printer.print_line(input);
         match input[curr] {
             Color::White => curr += 1,
             Color::Blue => {
                 input.swap(curr, end);
-                end -= 1;
+                while input[end] == Color::Blue {
+                    end -= 1;
+                }
             }
             Color::Red => {
                 input.swap(curr, begin);
-                begin += 1;
+                while input[begin] == Color::Red {
+                    begin += 1;
+                }
+                curr = begin;
             }
         }
         std::thread::sleep(Duration::from_millis(50));

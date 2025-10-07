@@ -42,9 +42,11 @@ int main() {
   cout << "]\n\n";
 
   println("Sort Dutch Flag");
-  array scrambled_flag = {White, Red,   Red,  Blue,  Blue,  Red,
-                          White, White, Blue, Blue,  White, White,
-                          Red,   Red,   Blue, White, White};
+  vector<Color> scrambled_flag;
+
+  for (int _ : iota(0, 20)) {
+    scrambled_flag.push_back(random_color());
+  }
   sort_dutch_flag((span<Color>)scrambled_flag);
 
   println("\nTwo sum\n");

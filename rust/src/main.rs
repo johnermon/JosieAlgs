@@ -32,25 +32,11 @@ fn main() {
     println!("\n");
 
     println!("Sort Dutch Flag");
-    let mut scrambled_flag = [
-        Color::White,
-        Color::Red,
-        Color::Red,
-        Color::Blue,
-        Color::Blue,
-        Color::Red,
-        Color::White,
-        Color::White,
-        Color::Blue,
-        Color::Blue,
-        Color::White,
-        Color::White,
-        Color::Red,
-        Color::Red,
-        Color::Blue,
-        Color::White,
-        Color::White,
-    ];
+    let mut scrambled_flag = Vec::new();
+
+    for _ in 0..20 {
+        scrambled_flag.push(Color::random())
+    }
 
     sort_dutch_flag(&mut scrambled_flag);
 
