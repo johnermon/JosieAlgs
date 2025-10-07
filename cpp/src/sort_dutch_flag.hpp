@@ -76,7 +76,7 @@ inline void sort_dutch_flag(span<color> input) {
       begin++;
       break;
     }
-    sleep_for(250ms);
+    sleep_for(100ms);
   }
 
   cout << "\n\n\033[1mGOD BLESS THE DUTCH \033[0m\n";
