@@ -44,7 +44,7 @@ int main() {
   println("Sort Dutch Flag");
   vector<Color> scrambled_flag;
 
-  for (int _ : iota(0, 20)) {
+  for (int _ : iota(0, 40)) {
     scrambled_flag.push_back(random_color());
   }
   sort_dutch_flag((span<Color>)scrambled_flag);

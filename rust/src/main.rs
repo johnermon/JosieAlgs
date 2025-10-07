@@ -34,7 +34,7 @@ fn main() {
     println!("Sort Dutch Flag");
     let mut scrambled_flag = Vec::new();
 
-    for _ in 0..20 {
+    for _ in 0..40 {
         scrambled_flag.push(Color::random())
     }
 

@@ -36,6 +36,7 @@ public:
     for (int i = 0; i <= data.size(); i++) {
       cout << "\n";
     }
+    cout << "\033[?25l";
   }
 
   static void write_line(span<Color> data, size_t column) {
@@ -54,14 +55,14 @@ public:
         break;
       }
     }
-    cout << "\033[0m";
+    cout << "\033[0m" << std::flush;
   }
 
   static void del_line(span<Color> data, size_t column) {
     cout << "\033[" << data.size() << "A";
     cout << "\n\033[" << 2 * column << "C";
     for (int i = 0; i < data.size(); i++) {
-      cout << "  \033[B\033[2D";
+      cout << "  \033[B\033[2D" << std::flush;
     }
   }
 
@@ -71,23 +72,22 @@ public:
   }
 
   void print_flag_animation(span<Color> data) {
+    size_t start = column;
     size_t max = 3 * data.size() / 2;
-    while (column > max) {
-      column--;
-      del_line(data, column);
-      sleep_for(20ms);
-    }
+
     while (column <= max) {
       print_line(data);
       sleep_for(20ms);
     }
 
+    column = start;
     while (column > 0) {
       column--;
       write_line(data, column);
       sleep_for(20ms);
     }
   }
+  ~DutchFlagPrinter() { cout << "\033[?25h"; }
 };
 
 inline void sort_dutch_flag(span<Color> input) {
@@ -103,7 +103,9 @@ inline void sort_dutch_flag(span<Color> input) {
 
     switch (input[curr]) {
     case White:
-      curr++;
+      while (input[curr] == White) {
+        curr++;
+      }
       break;
 
     case Blue:

@@ -11,7 +11,7 @@ def main():
     print("Sort dutch flag")
 
     scrambled_flag:list[Color]= []
-    for _ in range(20):
+    for _ in range(40):
         scrambled_flag.append(random.choice(list(Color)))
 
     sort_dutch_flag(scrambled_flag)

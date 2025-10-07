@@ -15,6 +15,7 @@ class DutchFlagPrinter:
         for _ in data:
             print()
         self.column = 0
+        print("\033[?25l", end = "")
 
     def write_line(self, data:list[Color], column:int):
         print(f"\033[{len(data)}A")
@@ -45,6 +46,7 @@ class DutchFlagPrinter:
         self.column +=1;
 
     def print_flag_animation(self, data:list[Color]):
+        start = self.column
         max = 3*len(data)//2
 
         while self.column > max:
@@ -56,10 +58,13 @@ class DutchFlagPrinter:
             self.print_line(data)
             sleep(0.02)
 
+        self.column = start
         while self.column > 0:
             self.column -=1
             self.write_line(data, self.column)
             sleep(0.02)
+    def __del__(self):
+        print("\033[?25h", end = "")
 
 def sort_dutch_flag(input:list[Color]):
     begin:int = 0
@@ -72,7 +77,8 @@ def sort_dutch_flag(input:list[Color]):
         flag_printer.print_line(input)
         match input[curr]:
             case Color.White:
-                curr+=1
+                while input[curr] == Color.White:
+                    curr+=1
 
             case Color.Blue:
                 input[curr], input[end] = input[end], input[curr]
