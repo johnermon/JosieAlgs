@@ -18,28 +18,28 @@ class DutchFlagPrinter:
         print("\033[?25l", end = "")
 
     def write_line(self, data:list[Color], column:int):
-        print(f"\033[{len(data)}A")
-        print(f"\033[{2*column}C", end = "")
+        print(f"\033[{len(data)}A", end = "", flush = False)
+        print(f"\n\033[{2*column}C", end = "", flush = False)
 
         for color in data:
 
             match color:
                 case Color.Red:
-                    print("\033[48;2;173;29;37m  \033[B\033[2D", end = "")
+                    print("\033[48;2;173;29;37m  \033[B\033[2D", end = "", flush = False)
 
                 case Color.White:
-                    print("\033[48;2;255;255;255m  \033[B\033[2D", end = "")
+                    print("\033[48;2;255;255;255m  \033[B\033[2D", end = "", flush = False)
 
                 case Color.Blue:
-                    print("\033[48;2;30;71;133m  \033[B\033[2D", end = "")
+                    print("\033[48;2;30;71;133m  \033[B\033[2D", end = "", flush = False)
 
-        print("\033[0m", end = "")
+        print("\033[0m", end = "", flush = True)
     
     def del_line(self, data:list[Color], column:int):
-        print(f"\033[{len(data)}A")
-        print(f"\033[{2*column}C", end = "")
+        print(f"\033[{len(data)}A", end = "", flush = False)
+        print(f"\n\033[{2*column}C", end = "", flush = False)
         for _ in range(len(data)):
-            print("  \033[B\033[2D", end = "")
+            print("  \033[B\033[2D", end = "", flush = True)
 
     def print_line(self, data:list[Color]):
         self.write_line(data, self.column)
