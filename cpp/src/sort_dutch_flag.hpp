@@ -3,7 +3,6 @@
 #include <cstddef>
 #include <iostream>
 #include <span>
-#include <string>
 #include <thread>
 #include <utility>
 
@@ -31,8 +30,8 @@ public:
   }
 
   void print_line() {
-    cout << "\033[" << data.size() - 1 << "A" << "\n";
-    cout << "\033[" << 2 * column << "C";
+    cout << "\033[" << data.size() - 1 << "A" << std::flush;
+    cout << "\n\033[" << 2 * column << "C";
     for (int i : data) {
       switch (i) {
       case red:
@@ -46,8 +45,15 @@ public:
         break;
       }
     }
-    cout << "\033[0m";
     column++;
+    cout << "\033[0m";
+  }
+
+  void print_flag() {
+    reset();
+    for (size_t i = 0; i <= (3 * data.size() / 2); i++) {
+      print_line();
+    }
   }
 };
 
@@ -55,14 +61,11 @@ inline void sort_dutch_flag(span<color> input) {
   size_t begin = 0;
   size_t end = input.size() - 1;
   size_t curr = 0;
-  size_t column = 0;
 
   // dutch flag printer class prints dutch flag
   auto flag_printer = dutch_flag_printer(input);
   while (curr < end) {
-
     flag_printer.print_line();
-
     switch (input[curr]) {
     case white:
       curr++;
@@ -80,10 +83,6 @@ inline void sort_dutch_flag(span<color> input) {
   }
 
   cout << "\n\n\033[1mGOD BLESS THE DUTCH \033[0m\n";
-  flag_printer.reset();
-  for (size_t i = 0; i <= (3 * input.size() / 2); i++) {
-    flag_printer.print_line();
-  }
-
+  flag_printer.print_flag();
   cout << "\n";
 }
