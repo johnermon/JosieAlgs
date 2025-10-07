@@ -16,9 +16,9 @@ class DutchFlagPrinter:
             print()
         self.column = 0
 
-    def print_line(self, data:list[Color]):
+    def write_line(self, data:list[Color], column:int):
         print(f"\033[{len(data)}A")
-        print(f"\033[{2*self.column}C", end = "")
+        print(f"\033[{2*column}C", end = "")
 
         for color in data:
 
@@ -32,13 +32,26 @@ class DutchFlagPrinter:
                 case Color.Blue:
                     print("\033[48;2;30;71;133m  \033[B\033[2D", end = "")
 
-        self.column+= 1
         print("\033[0m", end = "")
+    
+    def print_line(self, data:list[Color]):
+        self.write_line(data, self.column)
+        self.column +=1;
 
-    def print_flag(self, data:list[Color]):
-        self.reset(data)
-        for _ in range(3*len(data)//2):
+    def reverse_print_line(self, data:list[Color]):
+        self.column -=1;
+        self.write_line(data, self.column)
+
+    def print_flag_animation(self, data:list[Color]):
+        start = self.column
+        while self.column <= 3*len(data)//2:
             self.print_line(data)
+            sleep(0.05)
+
+        self.column = start
+        while self.column > 0:
+            self.reverse_print_line(data)
+            sleep(0.05)
 
 def sort_dutch_flag(input:list[Color]):
     begin:int = 0
@@ -59,7 +72,7 @@ def sort_dutch_flag(input:list[Color]):
             case Color.Red:
                 input[curr], input[begin] = input[begin], input[curr]
                 begin +=1
-        sleep(0.1)
+        sleep(0.05)
+    flag_printer.print_flag_animation(input)
     print("\n\n\033[1mGOD BLESS THE DUTCH \033[0m")
-    flag_printer.print_flag(input)
-    print()
+    sleep(1.5)

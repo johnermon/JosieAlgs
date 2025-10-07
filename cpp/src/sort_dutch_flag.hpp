@@ -28,7 +28,7 @@ public:
     }
   }
 
-  void print_line(span<Color> data) {
+  static void write_line(span<Color> data, size_t column) {
     cout << "\033[" << data.size() << "A";
     cout << "\n\033[" << 2 * column << "C";
     for (int color : data) {
@@ -44,14 +44,31 @@ public:
         break;
       }
     }
-    column++;
     cout << "\033[0m";
   }
 
-  void print_flag(span<Color> data) {
-    reset(data);
-    for (size_t i = 0; i <= (3 * data.size() / 2); i++) {
+  void print_line(span<Color> data) {
+    write_line(data, column);
+    column++;
+  }
+
+  void reverse_print_line(span<Color> data) {
+    column--;
+    write_line(data, column);
+  }
+
+  void print_flag_animation(span<Color> data) {
+    size_t start = column;
+
+    while (column <= 3 * data.size() / 2) {
       print_line(data);
+      sleep_for(50ms);
+    }
+
+    column = start;
+    while (column > 0) {
+      reverse_print_line(data);
+      sleep_for(50ms);
     }
   }
 };
@@ -80,10 +97,10 @@ inline void sort_dutch_flag(span<Color> input) {
       begin++;
       break;
     }
-    sleep_for(100ms);
+    sleep_for(50ms);
   }
 
+  flag_printer.print_flag_animation(input);
   cout << "\n\n\033[1mGOD BLESS THE DUTCH \033[0m\n";
-  flag_printer.print_flag(input);
-  cout << "\n";
+  sleep_for(1500ms);
 }
