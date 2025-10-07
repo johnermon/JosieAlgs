@@ -25,7 +25,7 @@ impl DutchFlagPrinter {
     }
 
     fn print_line(&mut self, data: &mut [Color]) {
-        println!("\x1b[{}A", data.len() - 1);
+        println!("\x1b[{}A", data.len());
         print!("\x1b[{}C", 2 * self.column);
         for color in data.iter() {
             match color {

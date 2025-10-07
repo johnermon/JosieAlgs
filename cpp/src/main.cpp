@@ -18,7 +18,7 @@ using std::println;
 using std::string_view;
 
 int main() {
-  println("Hello from C++!\n");
+  println("\nHello from C++!\n");
   println("Reverse a linked list\n");
   println("Contents");
   auto list = JoiseLinkedList<int>();
@@ -26,18 +26,20 @@ int main() {
     list.push_back(i);
   }
 
+  cout << '[';
   for (auto i : list) {
     cout << i << ", ";
   }
-  cout << "\n\n";
+  cout << "]\n\n";
 
   list.reverse();
 
   println("Reversed");
+  cout << '[';
   for (auto i : list) {
     cout << i << ", ";
   }
-  cout << "\n\n";
+  cout << "]\n\n";
 
   println("Sort Dutch Flag");
   array scrambled_flag = {White, Red,   Red,  Blue,  Blue,  Red,
@@ -47,11 +49,11 @@ int main() {
 
   println("\nTwo sum\n");
   array numbers = {1, 2, 5, 7, 4, 5, 0, 49, 29, 19};
-  println("Input is: \n");
+  println("Input is: \n[");
   for (auto i : numbers) {
     cout << i << ", ";
   }
-  cout << "\n\n";
+  cout << "]\n\n";
   auto sum = two_sum(10, (span<int>)numbers);
   if (sum.has_value()) {
     println("the indexes of sum are {} and {}\n", sum->first, sum->second);

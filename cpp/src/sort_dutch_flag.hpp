@@ -29,7 +29,7 @@ public:
   }
 
   void print_line(span<Color> data) {
-    cout << "\033[" << data.size() - 1 << "A";
+    cout << "\033[" << data.size() << "A";
     cout << "\n\033[" << 2 * column << "C";
     for (int color : data) {
       switch (color) {
