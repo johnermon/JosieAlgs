@@ -49,11 +49,6 @@ class DutchFlagPrinter:
         start = self.column
         max = 3*len(data)//2
 
-        while self.column > max:
-            self.del_line(data, self.column)
-            self.column-=1
-            sleep(0.02)
-
         while self.column <= max:
             self.print_line(data)
             sleep(0.02)

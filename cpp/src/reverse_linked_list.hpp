@@ -42,26 +42,30 @@ public:
     tail_pointer->ptr = segment;
     tail_pointer = segment;
   }
+
   void push_front(T element) {
     auto segment = JosieLinkedListSegment<T>::create(element);
     length++;
-    auto curr = list;
+    segment->ptr = list;
     list = segment;
-    list->ptr = curr;
   }
+
   void reverse() {
-    auto original = list->ptr;
-    auto reversed = list;
-    reversed->ptr = nullptr;
-    tail_pointer = reversed;
-    while (original != nullptr) {
-      auto next = original->ptr;
-      original->ptr = reversed;
-      reversed = original;
-      original = next;
+    if (length != 0) {
+      auto original = list->ptr;
+      auto reversed = list;
+      reversed->ptr = nullptr;
+      tail_pointer = reversed;
+      while (original != nullptr) {
+        auto next = original->ptr;
+        original->ptr = reversed;
+        reversed = original;
+        original = next;
+      }
+      list = reversed;
     }
-    list = reversed;
   }
+
   size_t len() { return length; }
 
   bool is_empty() { return 0 == length; }

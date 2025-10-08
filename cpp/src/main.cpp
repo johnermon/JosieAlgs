@@ -27,7 +27,7 @@ int main() {
   }
 
   cout << '[';
-  for (auto i : list) {
+  for (int i : list) {
     cout << i << ", ";
   }
   cout << "]\n\n";

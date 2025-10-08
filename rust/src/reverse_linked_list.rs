@@ -72,26 +72,27 @@ impl<T> JosieLinkedList<T> {
     pub fn push_front(&mut self, element: T) {
         let segment = JosieLinkedListSegment::new(element);
         self.length += 1;
-        let list = self.list;
-        self.list = segment;
         unsafe {
-            (*segment).ptr = list;
+            (*segment).ptr = self.list;
         }
+        self.list = segment;
     }
 
     pub fn reverse(&mut self) {
-        unsafe {
-            let mut original = (*self.list).ptr;
-            let mut reversed = self.list;
-            (*reversed).ptr = null_mut();
-            self.tail_ptr = reversed;
-            while !original.is_null() {
-                let next = (*original).ptr;
-                (*original).ptr = reversed;
-                reversed = original;
-                original = next;
+        if self.length != 0 {
+            unsafe {
+                let mut original = (*self.list).ptr;
+                let mut reversed = self.list;
+                (*reversed).ptr = null_mut();
+                self.tail_ptr = reversed;
+                while !original.is_null() {
+                    let next = (*original).ptr;
+                    (*original).ptr = reversed;
+                    reversed = original;
+                    original = next;
+                }
+                self.list = reversed;
             }
-            self.list = reversed;
         }
     }
 
