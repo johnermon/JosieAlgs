@@ -119,7 +119,7 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
         match input[curr] {
             Color::White => {
                 while input[curr] == Color::White {
-                    curr += 1
+                    curr += 1;
                 }
             }
 

@@ -51,7 +51,7 @@ public:
   }
 
   void reverse() {
-    if (length != 0) {
+    if (list != nullptr) {
       auto original = list->ptr;
       auto reversed = list;
       reversed->ptr = nullptr;

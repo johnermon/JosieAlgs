@@ -79,7 +79,7 @@ impl<T> JosieLinkedList<T> {
     }
 
     pub fn reverse(&mut self) {
-        if self.length != 0 {
+        if !self.list.is_null() {
             unsafe {
                 let mut original = (*self.list).ptr;
                 let mut reversed = self.list;
