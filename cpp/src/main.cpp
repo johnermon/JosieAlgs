@@ -31,7 +31,7 @@ int main() {
   for (int i : list) {
     cout << i << ", ";
   }
-  cout << "]\n\n";
+  println("]\n");
 
   list.reverse();
 
@@ -40,7 +40,7 @@ int main() {
   for (auto i : list) {
     cout << i << ", ";
   }
-  cout << "]\n\n";
+  println("]\n");
 
   cout << "Sort Dutch Flag" << std::flush;
   vector<Color> scrambled_flag;

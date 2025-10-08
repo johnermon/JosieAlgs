@@ -84,9 +84,9 @@ impl DutchFlagPrinter {
     }
 
     fn print_flag_animation(&mut self, data: &mut [Color]) {
+        let sleep_time = Duration::from_micros((500000 / data.len()) as u64);
         let start = self.column;
         let max = 3 * data.len() / 2;
-        let sleep_time = Duration::from_millis((500 / data.len()) as u64);
 
         while self.column <= max {
             self.print_line(data);
@@ -109,6 +109,7 @@ impl Drop for DutchFlagPrinter {
 }
 
 pub fn sort_dutch_flag(input: &mut [Color]) {
+    let sleep_time = Duration::from_micros((1500000 / input.len()) as u64);
     let mut begin = 0;
     let mut end = input.len() - 1;
     let mut curr = 0;
@@ -141,10 +142,10 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
             }
         }
 
-        sleep(Duration::from_millis((1500 / input.len()) as u64));
+        sleep(sleep_time);
     }
 
     flag_printer.print_flag_animation(input);
-    println!("\n\n\x1b[1mGOD BLESS THE DUTCH \x1b[0m\n");
+    println!("\n\n\x1b[1mGOD BLESS THE DUTCH \x1b[0m");
     sleep(Duration::from_millis(1500));
 }

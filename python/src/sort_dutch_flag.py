@@ -46,9 +46,9 @@ class DutchFlagPrinter:
         self.column +=1;
 
     def print_flag_animation(self, data:list[Color]):
+        sleep_time = 0.5 / len(data)
         start = self.column
         max = 3*len(data)//2
-        sleep_time = 0.5 / len(data)
 
         while self.column <= max:
             self.print_line(data)
@@ -63,6 +63,7 @@ class DutchFlagPrinter:
         print("\033[?25h", end = "")
 
 def sort_dutch_flag(input:list[Color]):
+    sleep_time = 1.5 / len(input)
     begin:int = 0
     end:int = len(input) - 1
 
@@ -86,7 +87,8 @@ def sort_dutch_flag(input:list[Color]):
                 while input[begin] == Color.Red:
                     begin+=1
                 curr = begin
-        sleep(1.5/len(input))
+
+        sleep(sleep_time)
     flag_printer.print_flag_animation(input)
     print("\n\n\033[1mGOD BLESS THE DUTCH \033[0m")
     sleep(1.5)

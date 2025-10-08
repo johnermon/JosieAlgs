@@ -18,14 +18,14 @@ def main():
     print("[", end = "")
     for i in  linked_list:
         print(f"{i}, ", end = "")
-    print ("]\n\n")
+    print ("]\n")
 
     print("Reversed")
     linked_list.reverse()
     print("[", end = "")
     for i in  linked_list:
         print(f"{i}, ", end = "")
-    print ("]\n\n")
+    print ("]\n")
 
     print("Sort dutch flag")
 

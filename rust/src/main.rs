@@ -24,7 +24,7 @@ fn main() {
     for i in list.iter() {
         print!("{i}, ");
     }
-    println!("]\n\n");
+    println!("]\n");
 
     list.reverse();
     println!("Reversed");
@@ -32,7 +32,7 @@ fn main() {
     for i in list.iter() {
         print!("{i}, ");
     }
-    println!("]\n\n");
+    println!("]\n");
 
     println!("Sort Dutch Flag");
     let mut scrambled_flag = Vec::new();

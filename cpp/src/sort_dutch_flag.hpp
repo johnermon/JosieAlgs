@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <cstddef>
 #include <iostream>
 #include <random>
@@ -10,6 +11,7 @@
 using std::cout;
 using std::span;
 using std::swap;
+using std::chrono::microseconds;
 using std::this_thread::sleep_for;
 
 using namespace std::chrono_literals;
@@ -77,7 +79,7 @@ public:
   void print_flag_animation(span<Color> data) {
     size_t start = column;
     size_t max = 3 * data.size() / 2;
-    auto sleep_time = 500ms / data.size();
+    auto sleep_time = microseconds{500000} / data.size();
 
     while (column <= max) {
       print_line(data);
@@ -95,6 +97,7 @@ public:
 };
 
 inline void sort_dutch_flag(span<Color> input) {
+  microseconds sleep_time = microseconds{1500000} / input.size();
   size_t begin = 0;
   size_t end = input.size() - 1;
   size_t curr = 0;
@@ -131,7 +134,7 @@ inline void sort_dutch_flag(span<Color> input) {
       throw std::runtime_error("somehow count enum made it into the vector");
     }
 
-    sleep_for(1500ms / input.size());
+    sleep_for(sleep_time);
   }
 
   flag_printer.print_flag_animation(input);
