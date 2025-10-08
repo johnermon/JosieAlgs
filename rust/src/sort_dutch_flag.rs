@@ -86,16 +86,18 @@ impl DutchFlagPrinter {
     fn print_flag_animation(&mut self, data: &mut [Color]) {
         let start = self.column;
         let max = 3 * data.len() / 2;
+        let sleep_time = Duration::from_millis((500 / data.len()) as u64);
+
         while self.column <= max {
             self.print_line(data);
-            sleep(Duration::from_millis(20));
+            sleep(sleep_time);
         }
 
         self.column = start;
         while self.column > 0 {
             self.column -= 1;
             self.write_line(data, self.column);
-            sleep(Duration::from_millis(20));
+            sleep(sleep_time);
         }
     }
 }
@@ -139,7 +141,7 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
             }
         }
 
-        sleep(Duration::from_millis(50));
+        sleep(Duration::from_millis((1500 / input.len()) as u64));
     }
 
     flag_printer.print_flag_animation(input);

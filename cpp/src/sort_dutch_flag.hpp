@@ -77,17 +77,18 @@ public:
   void print_flag_animation(span<Color> data) {
     size_t start = column;
     size_t max = 3 * data.size() / 2;
+    auto sleep_time = 500ms / data.size();
 
     while (column <= max) {
       print_line(data);
-      sleep_for(20ms);
+      sleep_for(sleep_time);
     }
 
     column = start;
     while (column > 0) {
       column--;
       write_line(data, column);
-      sleep_for(20ms);
+      sleep_for(sleep_time);
     }
   }
   ~DutchFlagPrinter() { cout << "\033[?25h"; }
@@ -130,7 +131,7 @@ inline void sort_dutch_flag(span<Color> input) {
       throw std::runtime_error("somehow count enum made it into the vector");
     }
 
-    sleep_for(50ms);
+    sleep_for(1500ms / input.size());
   }
 
   flag_printer.print_flag_animation(input);

@@ -9,6 +9,7 @@
 #include <array>
 #include <cstddef>
 #include <iostream>
+#include <ostream>
 #include <print>
 #include <string_view>
 
@@ -41,7 +42,7 @@ int main() {
   }
   cout << "]\n\n";
 
-  println("Sort Dutch Flag");
+  cout << "Sort Dutch Flag" << std::flush;
   vector<Color> scrambled_flag;
 
   for (int _ : iota(0, 40)) {
