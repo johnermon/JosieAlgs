@@ -1,6 +1,7 @@
 use rand::Rng;
 use std::{
     io::{BufWriter, Write},
+    thread::sleep,
     time::Duration,
 };
 
@@ -87,14 +88,14 @@ impl DutchFlagPrinter {
         let max = 3 * data.len() / 2;
         while self.column <= max {
             self.print_line(data);
-            std::thread::sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(20));
         }
 
         self.column = start;
         while self.column > 0 {
             self.column -= 1;
             self.write_line(data, self.column);
-            std::thread::sleep(Duration::from_millis(20));
+            sleep(Duration::from_millis(20));
         }
     }
 }
@@ -114,18 +115,21 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
 
     while curr <= end {
         flag_printer.print_line(input);
+
         match input[curr] {
             Color::White => {
                 while input[curr] == Color::White {
                     curr += 1
                 }
             }
+
             Color::Blue => {
                 input.swap(curr, end);
                 while input[end] == Color::Blue {
                     end -= 1;
                 }
             }
+
             Color::Red => {
                 input.swap(curr, begin);
                 while input[begin] == Color::Red {
@@ -134,10 +138,11 @@ pub fn sort_dutch_flag(input: &mut [Color]) {
                 curr = begin;
             }
         }
-        std::thread::sleep(Duration::from_millis(50));
+
+        sleep(Duration::from_millis(50));
     }
 
     flag_printer.print_flag_animation(input);
     println!("\n\n\x1b[1mGOD BLESS THE DUTCH \x1b[0m\n");
-    std::thread::sleep(Duration::from_millis(1500));
+    sleep(Duration::from_millis(1500));
 }

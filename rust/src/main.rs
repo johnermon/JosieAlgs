@@ -19,17 +19,20 @@ fn main() {
     for i in 0..=10 {
         list.push_back(i);
     }
+
+    print!("[");
     for i in list.iter() {
         print!("{i}, ");
     }
-    println!("\n");
+    println!("]\n\n");
 
     list.reverse();
     println!("Reversed");
+    print!("[");
     for i in list.iter() {
         print!("{i}, ");
     }
-    println!("\n");
+    println!("]\n\n");
 
     println!("Sort Dutch Flag");
     let mut scrambled_flag = Vec::new();
