@@ -43,13 +43,16 @@ public:
     cout << "\033[" << data.size() << "A";
     cout << "\n\033[" << 2 * column << "C";
     for (int color : data) {
+
       switch (color) {
       case Red:
         cout << "\033[48;2;173;29;37m  \033[B\033[2D";
         break;
+
       case White:
         cout << "\033[48;2;255;255;255m  \033[B\033[2D";
         break;
+
       case Blue:
         cout << "\033[48;2;30;71;133m  \033[B\033[2D";
         break;
@@ -122,9 +125,11 @@ inline void sort_dutch_flag(span<Color> input) {
       }
       curr = begin;
       break;
+
     case count:
       throw std::runtime_error("somehow count enum made it into the vector");
     }
+
     sleep_for(50ms);
   }
 
