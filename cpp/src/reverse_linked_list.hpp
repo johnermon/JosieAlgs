@@ -28,19 +28,19 @@ private:
     }
   };
 
-  class JosieLinkedListIterator {
+  class JosieLinkedListIter {
     JosieLinkedListSegment *current;
 
   public:
-    explicit JosieLinkedListIterator(JosieLinkedListSegment *start)
+    explicit JosieLinkedListIter(JosieLinkedListSegment *start)
         : current(start) {}
     T &operator*() const { return current->data; }
-    JosieLinkedListIterator &operator++() {
+    JosieLinkedListIter &operator++() {
       current = current->ptr;
       return *this;
     }
 
-    bool operator!=(const JosieLinkedListIterator &other) {
+    bool operator!=(const JosieLinkedListIter &other) {
       return current != other.current;
     }
   };
@@ -92,9 +92,9 @@ public:
 
   bool is_empty() { return 0 == length; }
 
-  JosieLinkedListIterator begin() { return JosieLinkedListIterator(list); }
+  JosieLinkedListIter begin() { return JosieLinkedListIter(list); }
 
-  JosieLinkedListIterator end() { return JosieLinkedListIterator(nullptr); }
+  JosieLinkedListIter end() { return JosieLinkedListIter(nullptr); }
 
   ~JosieLinkedList() {
     auto next = list;

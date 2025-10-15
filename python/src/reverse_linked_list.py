@@ -1,15 +1,16 @@
 from typing import TypeVar, Generic
+
 T = TypeVar("T")
 
 #i really dont like the way in which python obscures pointers, this shouldnt work, and yet it does
 class JosieLinkedList(Generic[T]):
     def __init__(self):
-        self.list:JosieLinkedListSegment[T] | None = None
-        self.tail_ptr:JosieLinkedListSegment[T] | None = None
+        self.list:_JosieLinkedListSegment[T] | None = None
+        self.tail_ptr:_JosieLinkedListSegment[T] | None = None
         self.length:int = 0
 
     def push_back(self, element:T):
-        segment = JosieLinkedListSegment[T](element)
+        segment = _JosieLinkedListSegment[T](element)
         self.length +=1
 
         if self.list == None:
@@ -22,7 +23,7 @@ class JosieLinkedList(Generic[T]):
         self.tail_ptr = segment
 
     def push_front(self, element:T):
-        segment = JosieLinkedListSegment[T](element)
+        segment = _JosieLinkedListSegment[T](element)
         self.length +=1
         segment.ptr = self.list
         self.list = segment
@@ -47,15 +48,15 @@ class JosieLinkedList(Generic[T]):
         return self.length == 0
 
     def __iter__(self):
-        return JosieLinkedListIter[T](self.list)
+        return _JosieLinkedListIter[T](self.list)
 
-class JosieLinkedListSegment(Generic[T]):
+class _JosieLinkedListSegment(Generic[T]):
     def __init__(self, data:T):
         self.data:T = data
-        self.ptr:JosieLinkedListSegment[T] | None = None
+        self.ptr:_JosieLinkedListSegment[T] | None = None
 
-class JosieLinkedListIter(Generic[T]):
-    def __init__(self, segment:JosieLinkedListSegment[T] | None):
+class _JosieLinkedListIter(Generic[T]):
+    def __init__(self, segment:_JosieLinkedListSegment[T] | None):
         self.segment = segment
 
     def __next__(self) -> T:
