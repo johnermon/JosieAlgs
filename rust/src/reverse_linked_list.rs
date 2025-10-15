@@ -38,7 +38,7 @@ impl<T> JosieLinkedListSegment<T> {
                 alloc(Layout::new::<JosieLinkedListSegment<T>>()) as *mut JosieLinkedListSegment<T>;
             ptr.is_null().then(|| panic!("Alloc failed"));
             (*ptr).ptr = null_mut();
-            ptr::write(&mut (*ptr).data, element);
+            write(&mut (*ptr).data, element);
             ptr
         }
     }

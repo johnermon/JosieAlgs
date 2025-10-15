@@ -6,48 +6,14 @@
 #include <utility>
 
 template <typename T> class JosieLinkedList {
-
 private:
-  class JosieLinkedListSegment {
-  public:
-    JosieLinkedListSegment *ptr;
-    T data;
+  // subclasses
+  class JosieLinkedListIter;
+  class JosieLinkedListSegment;
 
-    static JosieLinkedListSegment *create(T &&element) {
-      auto ptr =
-          (JosieLinkedListSegment *)malloc(sizeof(JosieLinkedListSegment));
-
-      if (ptr == nullptr) {
-        throw std::runtime_error("Failed to malloc for segment");
-      }
-
-      ptr->ptr = nullptr;
-      ptr->data = std::move(element);
-
-      return ptr;
-    }
-  };
-
-  class JosieLinkedListIter {
-    JosieLinkedListSegment *current;
-
-  public:
-    explicit JosieLinkedListIter(JosieLinkedListSegment *start)
-        : current(start) {}
-    T &operator*() const { return current->data; }
-    JosieLinkedListIter &operator++() {
-      current = current->ptr;
-      return *this;
-    }
-
-    bool operator!=(const JosieLinkedListIter &other) {
-      return current != other.current;
-    }
-  };
-
+  // private fields
   JosieLinkedListSegment *list;
   JosieLinkedListSegment *tail_pointer;
-
   size_t length;
 
 public:
@@ -105,4 +71,44 @@ public:
       free(to_dealloc);
     }
   }
+
+  // private subclasses
+private:
+  class JosieLinkedListSegment {
+  public:
+    JosieLinkedListSegment *ptr;
+    T data;
+
+    static JosieLinkedListSegment *create(T &&element) {
+      auto ptr =
+          (JosieLinkedListSegment *)malloc(sizeof(JosieLinkedListSegment));
+
+      if (ptr == nullptr) {
+        throw std::runtime_error("Failed to malloc for segment");
+      }
+
+      ptr->ptr = nullptr;
+      ptr->data = std::move(element);
+
+      return ptr;
+    }
+  };
+
+  class JosieLinkedListIter {
+    JosieLinkedListSegment *current;
+
+  public:
+    explicit JosieLinkedListIter(JosieLinkedListSegment *start)
+        : current(start) {}
+    T &operator*() const { return current->data; }
+
+    JosieLinkedListIter &operator++() {
+      current = current->ptr;
+      return *this;
+    }
+
+    bool operator!=(const JosieLinkedListIter &other) {
+      return current != other.current;
+    }
+  };
 };
