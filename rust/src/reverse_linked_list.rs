@@ -75,20 +75,22 @@ impl<T> JosieLinkedList<T> {
     }
 
     pub fn reverse(&mut self) {
-        if !self.list.is_null() {
-            unsafe {
-                let mut original = (*self.list).ptr;
-                let mut reversed = self.list;
-                (*reversed).ptr = null_mut();
-                self.tail_ptr = reversed;
-                while !original.is_null() {
-                    let next = (*original).ptr;
-                    (*original).ptr = reversed;
-                    reversed = original;
-                    original = next;
-                }
-                self.list = reversed;
+        if self.list.is_null() {
+            return;
+        }
+
+        unsafe {
+            let mut original = (*self.list).ptr;
+            let mut reversed = self.list;
+            (*reversed).ptr = null_mut();
+            self.tail_ptr = reversed;
+            while !original.is_null() {
+                let next = (*original).ptr;
+                (*original).ptr = reversed;
+                reversed = original;
+                original = next;
             }
+            self.list = reversed;
         }
     }
 

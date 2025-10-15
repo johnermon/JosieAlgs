@@ -29,17 +29,19 @@ class JosieLinkedList(Generic[T]):
         self.list = segment
 
     def reverse(self):
-        if self.list != None:
-            original = self.list.ptr
-            reversed = self.list
-            reversed.ptr = None
-            self.tail_ptr = reversed
-            while original != None:
-                next = original.ptr
-                original.ptr = reversed
-                reversed = original
-                original = next
-            self.list = reversed
+        if self.list == None:
+            return
+
+        original = self.list.ptr
+        reversed = self.list
+        reversed.ptr = None
+        self.tail_ptr = reversed
+        while original != None:
+            next = original.ptr
+            original.ptr = reversed
+            reversed = original
+            original = next
+        self.list = reversed
 
     def len(self) -> int:
         return self.length

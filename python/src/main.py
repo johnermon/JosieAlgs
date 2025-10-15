@@ -1,7 +1,7 @@
 from .longest_nonrepeating_substring import longest_nonrepeating_substring
 from .valid_intersecting_brackets import valid_intersecting_brackets
 from .two_sum import two_sum
-from .sort_dutch_flag import *
+from .sort_dutch_flag import sort_dutch_flag, Color
 from .reverse_linked_list import JosieLinkedList
 
 import random
@@ -58,3 +58,4 @@ def main():
             print(string, "is a valid input")
         else:
             print(string, "is an invalid input")
+

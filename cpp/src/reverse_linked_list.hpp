@@ -8,8 +8,8 @@
 template <typename T> class JosieLinkedList {
 private:
   // subclasses
-  class JosieLinkedListIter;
   class JosieLinkedListSegment;
+  class JosieLinkedListIter;
 
   // private fields
   JosieLinkedListSegment *list;
@@ -39,19 +39,21 @@ public:
   }
 
   void reverse() {
-    if (list != nullptr) {
-      auto original = list->ptr;
-      auto reversed = list;
-      reversed->ptr = nullptr;
-      tail_pointer = reversed;
-      while (original != nullptr) {
-        auto next = original->ptr;
-        original->ptr = reversed;
-        reversed = original;
-        original = next;
-      }
-      list = reversed;
+    if (list == nullptr) {
+      return;
     }
+
+    auto original = list->ptr;
+    auto reversed = list;
+    reversed->ptr = nullptr;
+    tail_pointer = reversed;
+    while (original != nullptr) {
+      auto next = original->ptr;
+      original->ptr = reversed;
+      reversed = original;
+      original = next;
+    }
+    list = reversed;
   }
 
   size_t len() { return length; }
