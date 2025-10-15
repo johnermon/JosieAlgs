@@ -103,8 +103,8 @@ impl<T> JosieLinkedList<T> {
 
     pub fn iter<'a>(&'a self) -> JosieLinkedListIter<'a, T> {
         JosieLinkedListIter {
-            _list: self,
             segment: self.list,
+            _list: self,
         }
     }
 
@@ -118,8 +118,8 @@ impl<T> JosieLinkedList<T> {
 }
 
 pub struct JosieLinkedListIterMut<'a, T> {
-    _list: &'a mut JosieLinkedList<T>,
     segment: *mut JosieLinkedListSegment<T>,
+    _list: &'a mut JosieLinkedList<T>,
 }
 
 impl<'a, T> Iterator for JosieLinkedListIterMut<'a, T> {
@@ -138,8 +138,8 @@ impl<'a, T> Iterator for JosieLinkedListIterMut<'a, T> {
 }
 
 pub struct JosieLinkedListIter<'a, T> {
-    _list: &'a JosieLinkedList<T>,
     segment: *mut JosieLinkedListSegment<T>,
+    _list: &'a JosieLinkedList<T>,
 }
 
 impl<'a, T> Iterator for JosieLinkedListIter<'a, T> {
