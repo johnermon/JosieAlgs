@@ -5,7 +5,8 @@
 #include <stdexcept>
 #include <utility>
 
-template <typename T> class JoiseLinkedList {
+template <typename T> class JosieLinkedList {
+
 private:
   class JosieLinkedListSegment {
   public:
@@ -27,13 +28,30 @@ private:
     }
   };
 
+  class JosieLinkedListIterator {
+    JosieLinkedListSegment *current;
+
+  public:
+    explicit JosieLinkedListIterator(JosieLinkedListSegment *start)
+        : current(start) {}
+    T &operator*() const { return current->data; }
+    JosieLinkedListIterator &operator++() {
+      current = current->ptr;
+      return *this;
+    }
+
+    bool operator!=(const JosieLinkedListIterator &other) {
+      return current != other.current;
+    }
+  };
+
   JosieLinkedListSegment *list;
   JosieLinkedListSegment *tail_pointer;
 
   size_t length;
 
 public:
-  JoiseLinkedList() : list(nullptr), tail_pointer(nullptr), length(0) {}
+  JosieLinkedList() : list(nullptr), tail_pointer(nullptr), length(0) {}
 
   void push_back(T element) {
     auto segment = JosieLinkedListSegment::create(std::move(element));
@@ -74,25 +92,11 @@ public:
 
   bool is_empty() { return 0 == length; }
 
-  class Iterator {
-    JosieLinkedListSegment *current;
+  JosieLinkedListIterator begin() { return JosieLinkedListIterator(list); }
 
-  public:
-    explicit Iterator(JosieLinkedListSegment *start) : current(start) {}
-    T &operator*() const { return current->data; }
-    Iterator &operator++() {
-      current = current->ptr;
-      return *this;
-    }
+  JosieLinkedListIterator end() { return JosieLinkedListIterator(nullptr); }
 
-    bool operator!=(const Iterator &other) { return current != other.current; }
-  };
-
-  Iterator begin() { return Iterator(list); }
-
-  Iterator end() { return Iterator(nullptr); }
-
-  ~JoiseLinkedList() {
+  ~JosieLinkedList() {
     auto next = list;
     while (next != nullptr) {
       next->data.~T();

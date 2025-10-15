@@ -22,7 +22,7 @@ int main() {
   println("\nHello from C++!\n");
   println("Reverse a linked list\n");
   println("Contents");
-  auto list = JoiseLinkedList<int>();
+  auto list = JosieLinkedList<int>();
   for (int i = 0; i <= 10; i++) {
     list.push_back(i);
   }
