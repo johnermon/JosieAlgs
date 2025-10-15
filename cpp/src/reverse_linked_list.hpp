@@ -5,37 +5,38 @@
 #include <stdexcept>
 #include <utility>
 
-template <typename T> class JosieLinkedListSegment {
-public:
-  JosieLinkedListSegment<T> *ptr;
-  T data;
-
-  static JosieLinkedListSegment<T> *create(T &&element) {
-    auto ptr =
-        (JosieLinkedListSegment<T> *)malloc(sizeof(JosieLinkedListSegment<T>));
-
-    if (ptr == nullptr) {
-      throw std::runtime_error("Failed to malloc for segment");
-    }
-
-    ptr->ptr = nullptr;
-    ptr->data = std::move(element);
-
-    return ptr;
-  }
-};
-
 template <typename T> class JoiseLinkedList {
 private:
-  JosieLinkedListSegment<T> *list;
-  JosieLinkedListSegment<T> *tail_pointer;
+  class JosieLinkedListSegment {
+  public:
+    JosieLinkedListSegment *ptr;
+    T data;
+
+    static JosieLinkedListSegment *create(T &&element) {
+      auto ptr =
+          (JosieLinkedListSegment *)malloc(sizeof(JosieLinkedListSegment));
+
+      if (ptr == nullptr) {
+        throw std::runtime_error("Failed to malloc for segment");
+      }
+
+      ptr->ptr = nullptr;
+      ptr->data = std::move(element);
+
+      return ptr;
+    }
+  };
+
+  JosieLinkedListSegment *list;
+  JosieLinkedListSegment *tail_pointer;
+
   size_t length;
 
 public:
   JoiseLinkedList() : list(nullptr), tail_pointer(nullptr), length(0) {}
 
   void push_back(T element) {
-    auto segment = JosieLinkedListSegment<T>::create(std::move(element));
+    auto segment = JosieLinkedListSegment::create(std::move(element));
     length++;
     if (list == nullptr) {
       list = segment;
@@ -47,7 +48,7 @@ public:
   }
 
   void push_front(T element) {
-    auto segment = JosieLinkedListSegment<T>::create(std::move(element));
+    auto segment = JosieLinkedListSegment::create(std::move(element));
     length++;
     segment->ptr = list;
     list = segment;
@@ -74,10 +75,10 @@ public:
   bool is_empty() { return 0 == length; }
 
   class Iterator {
-    JosieLinkedListSegment<T> *current;
+    JosieLinkedListSegment *current;
 
   public:
-    explicit Iterator(JosieLinkedListSegment<T> *start) : current(start) {}
+    explicit Iterator(JosieLinkedListSegment *start) : current(start) {}
     T &operator*() const { return current->data; }
     Iterator &operator++() {
       current = current->ptr;
