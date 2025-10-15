@@ -1,6 +1,6 @@
 use std::{
     alloc::{Layout, alloc, dealloc},
-    ptr::{self, drop_in_place, null_mut},
+    ptr::{self, drop_in_place, null_mut, write},
 };
 
 pub struct JosieLinkedList<T> {
@@ -33,18 +33,14 @@ struct JosieLinkedListSegment<T> {
 
 impl<T> JosieLinkedListSegment<T> {
     fn new(element: T) -> *mut Self {
-        let segment = JosieLinkedListSegment {
-            ptr: null_mut(),
-            data: element,
-        };
-        let ptr;
         unsafe {
-            ptr =
+            let ptr =
                 alloc(Layout::new::<JosieLinkedListSegment<T>>()) as *mut JosieLinkedListSegment<T>;
             ptr.is_null().then(|| panic!("Alloc failed"));
-            *ptr = segment;
+            (*ptr).ptr = null_mut();
+            ptr::write(&mut (*ptr).data, element);
+            ptr
         }
-        ptr
     }
 }
 

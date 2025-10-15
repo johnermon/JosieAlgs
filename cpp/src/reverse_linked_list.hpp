@@ -3,21 +3,24 @@
 #include <cstddef>
 #include <cstdlib>
 #include <stdexcept>
+#include <utility>
 
 template <typename T> class JosieLinkedListSegment {
 public:
   JosieLinkedListSegment<T> *ptr;
   T data;
 
-  static JosieLinkedListSegment<T> *create(T element) {
-    auto segment = JosieLinkedListSegment{nullptr, element};
+  static JosieLinkedListSegment<T> *create(T &&element) {
     auto ptr =
         (JosieLinkedListSegment<T> *)malloc(sizeof(JosieLinkedListSegment<T>));
 
     if (ptr == nullptr) {
       throw std::runtime_error("Failed to malloc for segment");
     }
-    *ptr = segment;
+
+    ptr->ptr = nullptr;
+    ptr->data = std::move(element);
+
     return ptr;
   }
 };
@@ -32,7 +35,7 @@ public:
   JoiseLinkedList() : list(nullptr), tail_pointer(nullptr), length(0) {}
 
   void push_back(T element) {
-    auto segment = JosieLinkedListSegment<T>::create(element);
+    auto segment = JosieLinkedListSegment<T>::create(std::move(element));
     length++;
     if (list == nullptr) {
       list = segment;
@@ -44,7 +47,7 @@ public:
   }
 
   void push_front(T element) {
-    auto segment = JosieLinkedListSegment<T>::create(element);
+    auto segment = JosieLinkedListSegment<T>::create(std::move(element));
     length++;
     segment->ptr = list;
     list = segment;
@@ -88,7 +91,7 @@ public:
 
   Iterator end() { return Iterator(nullptr); }
 
-  ~JoiseLinkedList<T>() {
+  ~JoiseLinkedList() {
     auto next = list;
     while (next != nullptr) {
       next->data.~T();
