@@ -1,7 +1,7 @@
 #include "josielib.h"
 #include <stdio.h>
 
-DEFINE_JOSIEVEC(size_t);
+DEFINE_JOSIEVEC(size_t, drop_noop);
 
 int main() {
   JosieVec_size_t josievec = new_josievec_size_t();
@@ -21,5 +21,5 @@ int main() {
   }
 
   printf("Dropping\n");
-  drop_josievec_size_t(&josievec, drop_noop);
+  drop_josievec_size_t(&josievec);
 }

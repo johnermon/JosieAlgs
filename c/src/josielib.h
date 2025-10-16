@@ -20,7 +20,7 @@ static inline size_t clz_size(size_t x) {
 #endif
 }
 
-#define DEFINE_JOSIEVEC(T)                                                     \
+#define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
                                                                                \
   typedef struct {                                                             \
     T *ptr;                                                                    \
@@ -39,10 +39,9 @@ static inline size_t clz_size(size_t x) {
     josievec->ptr = (T *)realloc((void *){josievec->ptr}, cap);                \
   }                                                                            \
                                                                                \
-  static inline void drop_josievec_##T(JosieVec_##T *josievec,                 \
-                                       drop_type drop) {                       \
+  static inline void drop_josievec_##T(JosieVec_##T *josievec) {               \
     for (size_t i = 0; i < josievec->len; i++) {                               \
-      drop(&josievec->ptr[i]);                                                 \
+      DROP_FN(&josievec->ptr[i]);                                              \
     }                                                                          \
     free((void *){josievec->ptr});                                             \
   }                                                                            \
