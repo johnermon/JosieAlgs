@@ -25,7 +25,8 @@ static inline size_t clz_size(size_t x) {
 #endif
 }
 
-// generic definition for josievec
+// generic definition for josievec, T is generic type, DROP_FN is the function
+// to call on drop.
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
                                                                                \
   typedef struct {                                                             \
@@ -65,14 +66,14 @@ static inline size_t clz_size(size_t x) {
                                                                                \
   static inline void reserve_##T(JosieVec_##T *josievec, size_t elems) {       \
     size_t elems_reserve = josievec->len + elems;                              \
-    while (elems_reserve > josievec->cap) {                                    \
-      grow_ammortized_##T(josievec);                                           \
+    if (josievec->cap < elems_reserve) {                                       \
+      allocate_internal_##T(josievec, clz_size(elems_reserve));                \
     }                                                                          \
   }                                                                            \
                                                                                \
   static inline void reserve_exact_##T(JosieVec_##T *josievec, size_t elems) { \
     size_t elems_reserve = josievec->len + elems;                              \
-    if (elems_reserve > josievec->cap) {                                       \
+    if (josievec->cap < elems_reserve) {                                       \
       allocate_internal_##T(josievec, elems_reserve);                          \
     }                                                                          \
   }                                                                            \

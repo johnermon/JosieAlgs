@@ -1,25 +1,25 @@
 #include "josielib.h"
 #include <stdio.h>
 
-DEFINE_JOSIEVEC(size_t, drop_noop);
+DEFINE_JOSIEVEC(int, drop_noop);
 
 int main() {
-  JosieVec_size_t josievec = new_josievec_size_t();
+  JosieVec_int josievec = new_josievec_int();
   printf("Pushing\n");
-  for (size_t i = 0; i <= 10; i++) {
-    push_size_t(&josievec, i);
+  for (int i = 0; i <= 10; i++) {
+    push_int(&josievec, i);
   }
 
   printf("Popping\n");
   for (int i = 0; i <= 10; i++) {
-    option_size_t out = pop_size_t(&josievec);
+    option_int out = pop_int(&josievec);
     if (out.exists) {
-      printf("%zu\n", out.element);
+      printf("%d\n", out.element);
     } else {
       break;
     }
   }
 
   printf("Dropping\n");
-  drop_josievec_size_t(&josievec);
+  drop_josievec_int(&josievec);
 }
