@@ -1,11 +1,17 @@
 #recursive ds store 
 **/.DS_Store
 
-#c build stuff
+compile_commands.json
+
+#c++ build stuff
 cpp/.cache/
 cpp/.cmake/
 cpp/build/
-compile_commands.json
+
+#c build stuff
+c/.cache/
+c/.cmake/
+c/build/
 
 #rust target and cargo lock
 rust/target/
