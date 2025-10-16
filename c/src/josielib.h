@@ -3,10 +3,15 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+// type for any function that returns a void pointer, in this case used for drop
+// functions
 typedef void (*drop_type)(void *);
 
+// drop noop is for when you want to initialize josievec without any drop code
+// for trivial types
 static inline void drop_noop(void *ptr) { (void)ptr; }
 
+// calculates the next power of two greater than input
 static inline size_t clz_size(size_t x) {
   if (x == 0) {
     return (size_t)(8 * sizeof(size_t));
@@ -20,6 +25,7 @@ static inline size_t clz_size(size_t x) {
 #endif
 }
 
+// generic definition for josievec
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
                                                                                \
   typedef struct {                                                             \
