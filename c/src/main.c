@@ -12,7 +12,7 @@ int main() {
 
   for (int i = 0; i <= 10; i++) {
     push_int(&josievec, i);
-    printf("cap is %d \n", (int)josievec.cap);
+    printf("cap is %zu \n", josievec.cap);
   }
 
   printf("Popping\n");

@@ -4,19 +4,15 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-// type for any function that returns a void pointer, in this case used for drop
-// functions
-typedef void (*drop_type)(void *);
-
 // drop noop is for when you want to initialize josievec without any drop code
 // for trivial types
 static inline void drop_noop(void *ptr) { (void)ptr; }
 
 // calculates the next power of two greater than input
 static inline size_t next_pw2(size_t x) {
-  if (x == 0) {
+  if (x == 0)
     return 1;
-  }
+
 #if SIZE_MAX == 0xFFFFFFFFu
   return (size_t)(1 << (32 - __builtin_clz(x)));
 #elif SIZE_MAX == 0xFFFFFFFFFFFFFFFFull
@@ -48,9 +44,9 @@ static inline size_t next_pw2(size_t x) {
   }                                                                            \
                                                                                \
   static inline void drop_josievec_##T(JosieVec_##T *josievec) {               \
-    for (size_t i = 0; i < josievec->len; i++) {                               \
+    for (size_t i = 0; i < josievec->len; i++)                                 \
       DROP_FN(&josievec->ptr[i]);                                              \
-    }                                                                          \
+                                                                               \
     free((void *){josievec->ptr});                                             \
   }                                                                            \
                                                                                \
@@ -84,9 +80,9 @@ static inline size_t next_pw2(size_t x) {
   }                                                                            \
                                                                                \
   static inline void push_##T(JosieVec_##T *josievec, T element) {             \
-    if (josievec->len == josievec->cap) {                                      \
+    if (josievec->len == josievec->cap)                                        \
       grow_ammortized_##T(josievec);                                           \
-    }                                                                          \
+                                                                               \
     josievec->ptr[josievec->len] = element;                                    \
     josievec->len++;                                                           \
   }                                                                            \
@@ -100,9 +96,9 @@ static inline size_t next_pw2(size_t x) {
   } option_##T;                                                                \
                                                                                \
   static inline option_##T pop_##T(JosieVec_##T *josievec) {                   \
-    if (josievec->len == 0) {                                                  \
+    if (josievec->len == 0)                                                    \
       return (option_##T){false};                                              \
-    }                                                                          \
+                                                                               \
     josievec->len--;                                                           \
     return (option_##T){true, josievec->ptr[josievec->len]};                   \
   }\
