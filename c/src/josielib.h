@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 
 // type for any function that returns a void pointer, in this case used for drop
@@ -12,14 +13,14 @@ typedef void (*drop_type)(void *);
 static inline void drop_noop(void *ptr) { (void)ptr; }
 
 // calculates the next power of two greater than input
-static inline size_t clz_size(size_t x) {
+static inline size_t next_pw2(size_t x) {
   if (x == 0) {
-    return (size_t)(8 * sizeof(size_t));
+    return 1;
   }
 #if SIZE_MAX == 0xFFFFFFFFu
-  return (size_t)__builtin_clz((size_t)x);
+  return (size_t)(1 << (32 - __builtin_clz(x)));
 #elif SIZE_MAX == 0xFFFFFFFFFFFFFFFFull
-  return (size_t)__builtin_clzll((size_t)x);
+  return (size_t)(1 << (64 - __builtin_clzll(x)));
 #else
   error "unsupported width"
 #endif
@@ -54,8 +55,9 @@ static inline size_t clz_size(size_t x) {
   }                                                                            \
                                                                                \
   static inline void grow_ammortized_##T(JosieVec_##T *josievec) {             \
-    size_t new_cap = clz_size(josievec->cap);                                  \
+    size_t new_cap = next_pw2(josievec->cap);                                  \
     allocate_internal_##T(josievec, new_cap);                                  \
+    josievec->cap = new_cap;                                                   \
   }                                                                            \
                                                                                \
   static inline JosieVec_##T with_capacity_##T(size_t cap) {                   \
@@ -67,7 +69,9 @@ static inline size_t clz_size(size_t x) {
   static inline void reserve_##T(JosieVec_##T *josievec, size_t elems) {       \
     size_t elems_reserve = josievec->len + elems;                              \
     if (josievec->cap < elems_reserve) {                                       \
-      allocate_internal_##T(josievec, clz_size(elems_reserve));                \
+      elems_reserve = next_pw2(elems_reserve);                                 \
+      allocate_internal_##T(josievec, elems_reserve);                          \
+      josievec->cap = elems_reserve;                                           \
     }                                                                          \
   }                                                                            \
                                                                                \
@@ -75,6 +79,7 @@ static inline size_t clz_size(size_t x) {
     size_t elems_reserve = josievec->len + elems;                              \
     if (josievec->cap < elems_reserve) {                                       \
       allocate_internal_##T(josievec, elems_reserve);                          \
+      josievec->cap = elems_reserve;                                           \
     }                                                                          \
   }                                                                            \
                                                                                \
