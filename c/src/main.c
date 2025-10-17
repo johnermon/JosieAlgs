@@ -1,9 +1,10 @@
-#include "josielib.h"
+#include "josieoption.h"
+#include "josievec.h"
 #include <stddef.h>
 #include <stdio.h>
 
-// defines josievec with type int and no drop
-DEFINE_JOSIEVEC(int, drop_noop);
+OPTION(int)
+JOSIEVEC(int)
 
 int main() {
 
