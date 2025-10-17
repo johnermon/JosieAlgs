@@ -18,12 +18,12 @@ int main() {
 
   printf("Popping\n");
 
-  for (int i = 0; i <= 10; i++) {
+  for (int i = 0; i <= 14; i++) {
     option_int out = pop_int(&josievec);
     if (out.exists) {
       printf("%d\n", out.element);
     } else {
-      break;
+      printf("Popped none at %d \n", i);
     }
   }
 

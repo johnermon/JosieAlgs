@@ -12,6 +12,7 @@
   JosieVec_##T new_josievec_##T();                                             \
                                                                                \
   void allocate_internal_##T(JosieVec_##T *josievec, size_t cap);              \
+                                                                               \
   void drop_josievec_##T(JosieVec_##T *josievec);                              \
                                                                                \
   void grow_ammortized_##T(JosieVec_##T *josievec);                            \

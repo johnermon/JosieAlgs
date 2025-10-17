@@ -3,6 +3,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+
+#define INTERNAL_OPTION
+
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
@@ -66,6 +69,7 @@
     josievec->ptr[josievec->len] = element;                                    \
     josievec->len++;                                                           \
   }                                                                            \
+                                                                               \
   option_##T pop_##T(JosieVec_##T *josievec) {                                 \
     if (josievec->len == 0)                                                    \
       return (option_##T){false};                                              \
