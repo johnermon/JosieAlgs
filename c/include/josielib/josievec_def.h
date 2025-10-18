@@ -2,9 +2,9 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
-
-#define INTERNAL_OPTION
+#include <string.h>
 
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
@@ -48,7 +48,9 @@
   void reserve_##T(JosieVec_##T *josievec, size_t elems) {                     \
     size_t elems_reserve = josievec->len + elems;                              \
     if (josievec->cap < elems_reserve) {                                       \
-      elems_reserve = next_pw2(elems_reserve);                                 \
+      /*want elems_reserve - 1 here so dont overallocate */                    \
+      /*when reserving for exactly power of two*/                              \
+      elems_reserve = next_pw2(elems_reserve - 1);                             \
       allocate_internal_##T(josievec, elems_reserve);                          \
       josievec->cap = elems_reserve;                                           \
     }                                                                          \
@@ -76,4 +78,16 @@
                                                                                \
     josievec->len--;                                                           \
     return (option_##T){true, josievec->ptr[josievec->len]};                   \
+  }                                                                            \
+                                                                               \
+  option_##T remove_##T(JosieVec_##T *josievec, size_t index) {                \
+    if (index > josievec->len) {                                               \
+      fprintf(stderr, "Tried to remove past bounds of JosieVec_##T");          \
+      return (option_##T){false};                                              \
+    }                                                                          \
+    T out = josievec->ptr[index];                                              \
+    size_t tail_len = josievec->len - index;                                   \
+    memmove(josievec->ptr + index, josievec->ptr + index + 1, tail_len);       \
+    josievec->len -= 1;                                                        \
+    return (option_##T){true, out};                                            \
   }\

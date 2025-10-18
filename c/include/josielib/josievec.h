@@ -25,4 +25,6 @@
                                                                                \
   void push_##T(JosieVec_##T *josievec, T element);                            \
                                                                                \
-  option_##T pop_##T(JosieVec_##T *josievec);\
+  option_##T pop_##T(JosieVec_##T *josievec);                                  \
+                                                                               \
+  option_##T remove_##T(JosieVec_##T *josievec, size_t index);\

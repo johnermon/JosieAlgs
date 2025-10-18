@@ -35,8 +35,9 @@ inline bool valid_intersecting_brackets(string_view input) {
     default:
       continue;
     }
-    for (auto [i, curr] : zip(iota(0), stack)) {
-      if (curr == open) {
+    for (size_t i = stack.size(); i-- > 0;) {
+      char character = stack[i];
+      if (character == open) {
         stack.erase(stack.begin() + i);
         goto continue_outer;
       }
