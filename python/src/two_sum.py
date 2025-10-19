@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Tuple
 
-def two_sum(target:int, input:List[int]) -> List[int]|None:
+def two_sum(target:int, input:List[int]) -> Tuple[int,int]|None:
     numbers:dict[int, int] = {}
     for i, curr in enumerate(input):
         complement = target - curr
         if (complement_index := numbers.get(complement)) is not None:
-            return [complement_index, i]
+            return (complement_index, i)
         numbers[curr] = i
     return None
