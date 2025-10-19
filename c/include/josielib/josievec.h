@@ -1,4 +1,4 @@
-
+#pragma once
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
 #define JOSIEVEC(T)                                                            \

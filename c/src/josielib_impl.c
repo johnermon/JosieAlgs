@@ -1,6 +1,5 @@
 #include "josiehelpers.h"
 #include "josieoption.h"
-#include "josiestringslice.h"
 #include "josievec_def.h"
 
 // creates options
