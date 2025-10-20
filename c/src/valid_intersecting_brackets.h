@@ -1,9 +1,7 @@
-#import "josieoption.h"
 #import "josievec.h"
 #include <stddef.h>
 #include <stdio.h>
 
-OPTION(char)
 JOSIEVEC(char)
 
 static inline bool valid_intersecting_brackets(const char *input) {

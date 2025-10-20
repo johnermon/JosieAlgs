@@ -7,6 +7,6 @@ typedef struct {
   size_t len;
 } JosieStringSlice;
 
-void josie_print_slice(JosieStringSlice slice);
+void josie_print_slice(JosieStringSlice *str);
 
 char *josie_copy_slice(JosieStringSlice source, char *destination);

@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 // import option int and also josievec int
-OPTION(int)
 JOSIEVEC(int)
 
 int main() {

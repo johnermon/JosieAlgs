@@ -1,10 +1,5 @@
 #include "josiehelpers.h"
-#include "josieoption.h"
 #include "josievec_def.h"
-
-// creates options
-OPTION(int)
-OPTION(char)
 
 // josievec int is simple data with no drop function
 DEFINE_JOSIEVEC(int, drop_noop)

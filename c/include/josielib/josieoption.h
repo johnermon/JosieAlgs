@@ -4,7 +4,7 @@
 
 #define OPTION(T)                                                              \
                                                                                \
-  typedef struct {                                                             \
+  typedef struct option_##T {                                                  \
     bool exists;                                                               \
     T element;                                                                 \
   } option_##T;

@@ -5,6 +5,7 @@
 
 // drop noop is for when you want to initialize josievec without any drop code
 // for trivial types
+
 static void drop_noop(void *ptr) { (void)ptr; }
 
 // calculates the next power of two greater than input
