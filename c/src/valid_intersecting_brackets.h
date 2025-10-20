@@ -1,4 +1,5 @@
-#import "josievec.h"
+#include "josieerror.h"
+#include "josievec.h"
 #include <stddef.h>
 #include <stdio.h>
 
@@ -6,12 +7,16 @@ JOSIEVEC(char)
 
 static inline bool valid_intersecting_brackets(const char *input) {
   JosieVec_char stack = new_josievec_char();
-  bool result = false;
+  bool valid;
+
   for (const char *p = input; *p; p++) {
     char curr = *p;
 
     if (curr == '(' || curr == '{' || curr == '[' || curr == '<') {
-      push_char(&stack, curr);
+      JosieError result = push_char(&stack, curr);
+      if (josie_is_error(result))
+        goto cleanup;
+
       continue;
     }
 
@@ -41,13 +46,17 @@ static inline bool valid_intersecting_brackets(const char *input) {
       }
     }
 
+    // failure case, did not find corresponding bracket
+    valid = false;
     goto cleanup;
   continue_outer:;
   }
 
-  result = stack.len == 0;
-cleanup:
+  // if the stack is empty at the end of algorithm then algorithm is successful,
+  // if not, it has failed
+  valid = stack.len == 0;
 
+cleanup:
   drop_josievec_char(&stack);
-  return result;
+  return valid;
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "josieerror.h"
 #include "josieoption.h"
 #include "josieresult.h"
 
@@ -30,7 +29,7 @@
     for (size_t i = 0; i < josievec->len; i++)                                 \
       DROP_FN(&ptr[i]);                                                        \
                                                                                \
-    free((void *)ptr);                                                         \
+    free(ptr);                                                                 \
     josievec->ptr = NULL;                                                      \
     josievec->len = 0;                                                         \
     josievec->cap = 0;                                                         \
@@ -52,10 +51,8 @@
     return OK;                                                                 \
   }                                                                            \
                                                                                \
-  JosieError grow_ammortized_##T(JosieVec_##T *josievec) {                     \
-    JosieError result =                                                        \
-        allocate_internal_##T(josievec, next_pw2(josievec->cap));              \
-    return result;                                                             \
+  static inline JosieError grow_ammortized_##T(JosieVec_##T *josievec) {       \
+    return allocate_internal_##T(josievec, next_pw2(josievec->cap));           \
   }                                                                            \
                                                                                \
   JosieResult_JosieVec_##T with_capacity_##T(size_t cap) {                     \
@@ -70,10 +67,7 @@
       /*want elems_reserve - 1 here so dont overallocate */ /*when reserving   \
                                                                for exactly     \
                                                                power of two*/  \
-      JosieError result =                                                      \
-          allocate_internal_##T(josievec, next_pw2(elems_reserve - 1));        \
-                                                                               \
-      return result;                                                           \
+      return allocate_internal_##T(josievec, next_pw2(elems_reserve - 1));     \
     }                                                                          \
     return OK;                                                                 \
   }                                                                            \

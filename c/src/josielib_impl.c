@@ -1,3 +1,4 @@
+#include "josieerror_def.h"
 #include "josiehelpers.h"
 #include "josievec_def.h"
 
