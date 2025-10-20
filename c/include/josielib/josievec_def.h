@@ -112,7 +112,9 @@
     size_t len = josievec->len;                                                \
     T *ptr = josievec->ptr;                                                    \
     if (index >= len)                                                          \
-      return (JosieResult_##T){OUT_OF_BOUNDS};                                 \
+      return (JosieResult_##T){                                                \
+          OUT_OF_BOUNDS,                                                       \
+      };                                                                       \
                                                                                \
     T out = ptr[index];                                                        \
     size_t tail_len = len - index - 1;                                         \

@@ -1,4 +1,3 @@
-#include "josieoption.h"
 #include "josievec.h"
 #include "valid_intersecting_brackets.h"
 #include <stddef.h>
