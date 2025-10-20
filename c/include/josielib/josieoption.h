@@ -2,9 +2,9 @@
 
 #include <stdbool.h>
 
-#define OPTION(T)                                                              \
+#define JOSIEOPTION(T)                                                         \
                                                                                \
-  typedef struct option_##T {                                                  \
+  typedef struct JosieOption_##T {                                             \
     bool exists;                                                               \
     T element;                                                                 \
-  } option_##T;
+  } JosieOption_##T;

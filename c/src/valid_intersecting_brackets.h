@@ -7,9 +7,10 @@ JOSIEVEC(char)
 JOSIERESULT(bool)
 
 static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
-  JosieVec_char stack = new_josievec_char();
-  bool valid;
   JosieError result = OK;
+
+  JosieVec_char stack = new_josievec_char();
+  bool valid = false;
 
   for (const char *p = input; *p; p++) {
     char curr = *p;
@@ -43,14 +44,16 @@ static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
     for (size_t i = stack.len; i-- > 0;) {
       char character = stack.ptr[i];
       if (character == open) {
+        // returns an error value but due to knowing invariants it is safe to
+        // ignore
         remove_char(&stack, i);
         goto continue_outer;
       }
     }
 
     // failure case, did not find corresponding bracket
-    valid = false;
     goto cleanup;
+
   continue_outer:;
   }
 
@@ -60,5 +63,5 @@ static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
 
 cleanup:
   drop_josievec_char(&stack);
-  return (JosieResult_bool){result, valid};
+  return (JosieResult_bool){.error = result, .result = valid};
 }

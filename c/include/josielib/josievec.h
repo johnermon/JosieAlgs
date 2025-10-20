@@ -14,11 +14,13 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
-  OPTION(T)                                                                    \
+  JOSIEOPTION(T)                                                               \
   JOSIERESULT(T)                                                               \
   JOSIERESULT(JosieVec_##T)                                                    \
                                                                                \
-  JosieVec_##T new_josievec_##T();                                             \
+  JosieVec_##T static const inline new_josievec_##T() {                        \
+    return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \
+  }                                                                            \
                                                                                \
   void drop_josievec_##T(JosieVec_##T *josievec);                              \
                                                                                \
@@ -30,6 +32,6 @@
                                                                                \
   JosieError push_##T(JosieVec_##T *josievec, T element);                      \
                                                                                \
-  option_##T pop_##T(JosieVec_##T *josievec);                                  \
+  JosieOption_##T pop_##T(JosieVec_##T *josievec);                             \
                                                                                \
   JosieResult_##T remove_##T(JosieVec_##T *josievec, size_t index);\
