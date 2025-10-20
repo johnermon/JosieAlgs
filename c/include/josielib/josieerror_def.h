@@ -4,15 +4,19 @@
 #include <stdio.h>
 typedef enum JosieError { OK, ALLOC_FAIL, OUT_OF_BOUNDS } JosieError;
 
-bool josie_is_error(JosieError error) {
+static const inline bool josie_is_error(JosieError error) {
+  return error != OK;
+};
+
+int josie_handle_error(JosieError error) {
   switch (error) {
   case ALLOC_FAIL:
     fprintf(stderr, "[JosieError] Failed Allocation\n");
-    return true;
+    return 1;
   case OUT_OF_BOUNDS:
     fprintf(stderr, "[JosieError] Out of Bounds Error\n");
-    return true;
+    return 2;
   case OK:
-    return false;
+    return 0;
   }
 }

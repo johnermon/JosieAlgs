@@ -20,11 +20,7 @@
                                                                                \
   JosieVec_##T new_josievec_##T();                                             \
                                                                                \
-  JosieError allocate_internal_##T(JosieVec_##T *josievec, size_t cap);        \
-                                                                               \
   void drop_josievec_##T(JosieVec_##T *josievec);                              \
-                                                                               \
-  static inline JosieError grow_ammortized_##T(JosieVec_##T *josievec);        \
                                                                                \
   JosieResult_JosieVec_##T with_capacity_##T(size_t cap);                      \
                                                                                \

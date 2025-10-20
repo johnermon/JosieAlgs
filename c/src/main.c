@@ -1,3 +1,4 @@
+#include "josieerror.h"
 #include "josievec.h"
 #include "valid_intersecting_brackets.h"
 #include <stddef.h>
@@ -7,13 +8,20 @@
 JOSIEVEC(int)
 
 int main() {
+  int exit_code = 0;
 
   printf("Valid intersecting Brackets\n\n");
   const char *brackets[4] = {"{{}<[>]}", "{{", "]]", "<<{>{[}>(}])"};
 
   for (size_t i = 0; i < 4; i++) {
     const char *string = brackets[i];
-    if (valid_intersecting_brackets(string)) {
+    JosieResult_bool result = valid_intersecting_brackets(string);
+    if (josie_is_error(result.error)) {
+      exit_code = josie_handle_error(result.error);
+      goto cleanup;
+    }
+
+    if (result.result) {
       printf("%s is a valid input\n", string);
     } else {
       printf("%s is a invalid input\n", string);
@@ -23,7 +31,12 @@ int main() {
 
   JosieVec_int josievec = new_josievec_int();
   for (int i = 0; i <= 10; i++) {
-    push_int(&josievec, i);
+    JosieError result = push_int(&josievec, i);
+    if (josie_is_error(result)) {
+      exit_code = josie_handle_error(result);
+      goto cleanup;
+    }
+
     printf("cap is %zu \n", josievec.cap);
   }
 
@@ -38,6 +51,8 @@ int main() {
     }
   }
 
+cleanup:
   printf("Dropping\n");
   drop_josievec_int(&josievec);
+  return exit_code;
 }

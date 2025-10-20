@@ -4,16 +4,18 @@
 #include <stdio.h>
 
 JOSIEVEC(char)
+JOSIERESULT(bool)
 
-static inline bool valid_intersecting_brackets(const char *input) {
+static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
   JosieVec_char stack = new_josievec_char();
   bool valid;
+  JosieError result = OK;
 
   for (const char *p = input; *p; p++) {
     char curr = *p;
 
     if (curr == '(' || curr == '{' || curr == '[' || curr == '<') {
-      JosieError result = push_char(&stack, curr);
+      result = push_char(&stack, curr);
       if (josie_is_error(result))
         goto cleanup;
 
@@ -58,5 +60,5 @@ static inline bool valid_intersecting_brackets(const char *input) {
 
 cleanup:
   drop_josievec_char(&stack);
-  return valid;
+  return (JosieResult_bool){result, valid};
 }
