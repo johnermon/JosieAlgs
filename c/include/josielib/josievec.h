@@ -22,16 +22,17 @@
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \
   }                                                                            \
                                                                                \
-  void drop_josievec_##T(JosieVec_##T *josievec);                              \
+  void drop_josievec_##T(JosieVec_##T *restrict josievec);                     \
                                                                                \
   JosieResult_JosieVec_##T with_capacity_##T(size_t cap);                      \
                                                                                \
-  JosieError reserve_##T(JosieVec_##T *josievec, size_t elems);                \
+  JosieError reserve_##T(JosieVec_##T *restrict josievec, size_t elems);       \
                                                                                \
-  JosieError reserve_exact_##T(JosieVec_##T *josievec, size_t elems);          \
+  JosieError reserve_exact_##T(JosieVec_##T *restrict jjosievec,               \
+                               size_t elems);                                  \
                                                                                \
-  JosieError push_##T(JosieVec_##T *josievec, T element);                      \
+  JosieError push_##T(JosieVec_##T *restrict josievec, T element);             \
                                                                                \
-  JosieOption_##T pop_##T(JosieVec_##T *josievec);                             \
+  JosieOption_##T pop_##T(JosieVec_##T *restrict josievec);                    \
                                                                                \
-  JosieResult_##T remove_##T(JosieVec_##T *josievec, size_t index);\
+  JosieResult_##T remove_##T(JosieVec_##T *restrict josievec, size_t index);\

@@ -118,4 +118,4 @@
     memmove(ptr + index, ptr + index + 1, tail_len * sizeof(T));               \
     josievec->len -= 1;                                                        \
     return (JosieResult_##T){.error = OK, .result = out};                      \
-  }\
+  }

@@ -16,8 +16,7 @@ int main() {
   for (size_t i = 0; i < 4; i++) {
     const char *string = brackets[i];
     JosieResult_bool output = valid_intersecting_brackets(string);
-    result = output.error;
-    if (josie_is_error(result))
+    if (josie_try(output.error, &result))
       goto cleanup;
 
     if (output.result) {
@@ -32,7 +31,7 @@ int main() {
   JosieVec_int josievec = new_josievec_int();
   for (int i = 0; i <= 10; i++) {
     result = push_int(&josievec, i);
-    if (josie_is_error(result))
+    if (josie_try(push_int(&josievec, i), &result))
       goto cleanup;
 
     printf("cap is %zu \n", josievec.cap);
