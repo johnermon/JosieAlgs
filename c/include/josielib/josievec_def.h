@@ -9,10 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define JosieVecIterate(T, elem, iter)                                         \
-  for (JosieOption_ptr_##T##elem = josievec_iter_next_##T(&##iter.result);     \
-       ##elem.exists;##elem = josievec_iter_next_##T(&##iter.result))
-
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \

@@ -5,9 +5,9 @@
 #include "josieresult.h"
 
 #define JosieVecIterate(T, elem, iter)                                         \
-  JosieOption_ptr_##T elem = josievec_iter_next_##T(&iter.result);             \
+  JosieOption_ptr_##T elem = josievec_iter_next_##T(iter);                     \
   elem.exists;                                                                 \
-  elem = josievec_iter_next_##T(&iter.result)
+  elem = josievec_iter_next_##T(iter)
 
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.

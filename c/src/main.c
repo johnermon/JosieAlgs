@@ -40,9 +40,8 @@ int main() {
   if (josie_try(iter.error, &result))
     goto cleanup;
 
-  for (JosieVecIterate(int, elem, iter)) {
+  for (JosieVecIterate(int, elem, &iter.result))
     printf("iterating! %d \n", *elem.element);
-  }
 
 cleanup:
   drop_josievec_int(&josievec);
