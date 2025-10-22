@@ -5,6 +5,10 @@
 #define JOSIEOPTION(T)                                                         \
                                                                                \
   typedef struct JosieOption_##T {                                             \
-    bool exists;                                                               \
     T element;                                                                 \
-  } JosieOption_##T;
+    bool exists;                                                               \
+  } JosieOption_##T;                                                           \
+  typedef struct JosieOption_ptr_##T {                                         \
+    T *element;                                                                \
+    bool exists;                                                               \
+  } JosieOption_ptr_##T;

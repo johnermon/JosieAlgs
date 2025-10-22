@@ -4,7 +4,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-// import option int and also josievec int
 JOSIEVEC(int)
 
 int main() {
@@ -19,18 +18,16 @@ int main() {
     if (josie_try(output.error, &result))
       goto cleanup;
 
-    if (output.result) {
+    if (output.result)
       printf("%s is a valid input\n", string);
-    } else {
+    else
       printf("%s is a invalid input\n", string);
-    }
   }
 
   printf("Pushing\n");
 
   JosieVec_int josievec = new_josievec_int();
   for (int i = 0; i <= 10; i++) {
-    result = push_int(&josievec, i);
     if (josie_try(push_int(&josievec, i), &result))
       goto cleanup;
 
@@ -39,17 +36,15 @@ int main() {
 
   printf("Popping\n");
 
-  for (int i = 0; i <= 14; i++) {
-    JosieOption_int out = pop_int(&josievec);
-    if (out.exists) {
-      printf("%d\n", out.element);
-    } else {
-      printf("Popped none at %d \n", i);
-    }
+  JosieResult_JosieVecIter_int iter = to_iter_int(&josievec, 0, josievec.len);
+  if (josie_try(iter.error, &result))
+    goto cleanup;
+
+  JosieVecIterate(int, elem, iter) {
+    printf("iterating! %d \n", *elem.element);
   }
 
 cleanup:
-  printf("Dropping\n");
   drop_josievec_int(&josievec);
   return josie_handle_error(result);
 }

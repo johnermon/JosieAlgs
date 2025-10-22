@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.1)
+cmake_minimum_required(VERSION 3.31.6)
 project(JosieAlgs LANGUAGES C)
 add_executable(JosieAlgs 
   src/main.c

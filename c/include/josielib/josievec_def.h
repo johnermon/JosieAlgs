@@ -8,6 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define JosieVecIterate(T, elem, iter)                                         \
+  for (JosieOption_ptr_##T##elem = josievec_iter_next_##T(&##iter.result);     \
+       ##elem.exists;##elem = josievec_iter_next_##T(&##iter.result))
+
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
@@ -18,9 +23,15 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
+  typedef struct JosieVecIter_##T {                                            \
+    T *curr;                                                                   \
+    T const *end;                                                              \
+  } JosieVecIter_##T;                                                          \
+                                                                               \
   JOSIEOPTION(T)                                                               \
   JOSIERESULT(T)                                                               \
   JOSIERESULT(JosieVec_##T)                                                    \
+  JOSIERESULT(JosieVecIter_##T)                                                \
                                                                                \
   JosieVec_##T static inline new_josievec_##T() {                              \
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \
@@ -40,11 +51,11 @@
   JosieError allocate_internal_##T(JosieVec_##T *restrict josievec,            \
                                    size_t cap) {                               \
     T *restrict ptr = josievec->ptr;                                           \
-    if (ptr == NULL) {                                                         \
+    if (ptr == NULL)                                                           \
       ptr = malloc(cap * sizeof(T));                                           \
-    } else {                                                                   \
+                                                                               \
+    else                                                                       \
       ptr = realloc(ptr, cap * sizeof(T));                                     \
-    }                                                                          \
                                                                                \
     if (ptr == NULL)                                                           \
       return ALLOC_FAIL;                                                       \
@@ -62,17 +73,14 @@
   JosieResult_JosieVec_##T with_capacity_##T(size_t cap) {                     \
     JosieVec_##T temp = new_josievec_##T();                                    \
     JosieError result = allocate_internal_##T(&temp, cap);                     \
-    return (JosieResult_JosieVec_##T){result, temp};                           \
+    return (JosieResult_JosieVec_##T){.result = temp, .error = result};        \
   }                                                                            \
                                                                                \
   JosieError reserve_##T(JosieVec_##T *restrict josievec, size_t elems) {      \
     size_t elems_reserve = josievec->len + elems;                              \
-    if (josievec->cap < elems_reserve) {                                       \
-      /*want elems_reserve - 1 here so dont overallocate */ /*when reserving   \
-                                                               for exactly     \
-                                                               power of two*/  \
+    if (josievec->cap < elems_reserve)                                         \
       return allocate_internal_##T(josievec, next_pw2(elems_reserve - 1));     \
-    }                                                                          \
+                                                                               \
     return OK;                                                                 \
   }                                                                            \
                                                                                \
@@ -101,10 +109,11 @@
                                                                                \
   JosieOption_##T pop_##T(JosieVec_##T *restrict josievec) {                   \
     if (josievec->len == 0)                                                    \
-      return (JosieOption_##T){false};                                         \
+      return (JosieOption_##T){.exists = false};                               \
                                                                                \
     josievec->len--;                                                           \
-    return (JosieOption_##T){true, josievec->ptr[josievec->len]};              \
+    return (JosieOption_##T){.element = josievec->ptr[josievec->len],          \
+                             .exists = true};                                  \
   }                                                                            \
                                                                                \
   JosieResult_##T remove_##T(JosieVec_##T *restrict josievec, size_t index) {  \
@@ -117,5 +126,33 @@
     size_t tail_len = len - index - 1;                                         \
     memmove(ptr + index, ptr + index + 1, tail_len * sizeof(T));               \
     josievec->len -= 1;                                                        \
-    return (JosieResult_##T){.error = OK, .result = out};                      \
-  }
+    return (JosieResult_##T){.result = out, .error = OK};                      \
+  }                                                                            \
+                                                                               \
+  JosieResult_JosieVecIter_##T to_iter_##T(JosieVec_##T *restrict josievec,    \
+                                           size_t start, size_t end) {         \
+                                                                               \
+    if (start > end || start > josievec->len || end > josievec->len)           \
+      return (JosieResult_JosieVecIter_##T){.error = OUT_OF_BOUNDS};           \
+                                                                               \
+    T *restrict ptr = josievec->ptr;                                           \
+                                                                               \
+    JosieVecIter_##T iter =                                                    \
+        (JosieVecIter_##T){.curr = ptr + start, .end = ptr + end};             \
+                                                                               \
+    return (JosieResult_JosieVecIter_##T){.result = iter, .error = OK};        \
+  }                                                                            \
+                                                                               \
+  JosieOption_ptr_##T josievec_iter_next_##T(                                  \
+      JosieVecIter_##T *restrict josievec_iter) {                              \
+    T *restrict curr = josievec_iter->curr;                                    \
+                                                                               \
+    if (curr == josievec_iter->end) {                                          \
+      josievec_iter->curr = NULL;                                              \
+      josievec_iter->end = NULL;                                               \
+      return (JosieOption_ptr_##T){.exists = false};                           \
+    }                                                                          \
+                                                                               \
+    josievec_iter->curr++;                                                     \
+    return (JosieOption_ptr_##T){.element = curr, .exists = true};             \
+  }\

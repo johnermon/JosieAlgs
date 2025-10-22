@@ -16,8 +16,7 @@ static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
     char curr = *p;
 
     if (curr == '(' || curr == '{' || curr == '[' || curr == '<') {
-      result = push_char(&stack, curr);
-      if (josie_is_error(result))
+      if (josie_try(push_char(&stack, curr), &result))
         goto cleanup;
 
       continue;
