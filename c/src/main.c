@@ -1,9 +1,13 @@
 #include "josieerror.h"
+#include "josieoption.h"
 #include "josievec.h"
 #include "valid_intersecting_brackets.h"
 #include <stddef.h>
 #include <stdio.h>
 
+JOSIEOPTION(int)
+JOSIERESULT(int)
+JOSIEITER(int)
 JOSIEVEC(int)
 
 int main() {
@@ -36,11 +40,13 @@ int main() {
 
   printf("Popping\n");
 
-  JosieResult_JosieVecIter_int iter = to_iter_int(&josievec, 0, josievec.len);
+  JosieResult_JosieIter_int iter =
+      josievec_to_iter_int(&josievec, 0, josievec.len);
+
   if (josie_try(iter.error, &result))
     goto cleanup;
 
-  for (JosieVecIterate(int, elem, &iter.result))
+  for (JosieIterate(int, elem, &iter.result))
     printf("iterating! %d \n", *elem.element);
 
 cleanup:

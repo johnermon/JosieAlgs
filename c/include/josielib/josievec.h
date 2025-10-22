@@ -1,13 +1,9 @@
 #pragma once
 
 #include "josieerror.h"
+#include "josieiter.h"
 #include "josieoption.h"
 #include "josieresult.h"
-
-#define JosieVecIterate(T, elem, iter)                                         \
-  JosieOption_ptr_##T elem = josievec_iter_next_##T(iter);                     \
-  elem.exists;                                                                 \
-  elem = josievec_iter_next_##T(iter)
 
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
@@ -19,15 +15,8 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
-  typedef struct JosieVecIter_##T {                                            \
-    T *curr;                                                                   \
-    T const *end;                                                              \
-  } JosieVecIter_##T;                                                          \
-                                                                               \
-  JOSIEOPTION(T)                                                               \
-  JOSIERESULT(T)                                                               \
   JOSIERESULT(JosieVec_##T)                                                    \
-  JOSIERESULT(JosieVecIter_##T)                                                \
+  JOSIERESULT(JosieIter_##T)                                                   \
                                                                                \
   JosieVec_##T static const inline new_josievec_##T() {                        \
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \
@@ -47,8 +36,6 @@
                                                                                \
   JosieResult_##T remove_##T(JosieVec_##T *restrict josievec, size_t index);   \
                                                                                \
-  JosieResult_JosieVecIter_##T to_iter_##T(JosieVec_##T *restrict josievec,    \
-                                           size_t start, size_t end);          \
-                                                                               \
-  JosieOption_ptr_##T josievec_iter_next_##T(                                  \
-      JosieVecIter_##T *restrict josievec_iter);\
+  JosieResult_JosieIter_##T josievec_to_iter_##T(                              \
+      JosieVec_##T *restrict josievec, size_t start, size_t end);
+\

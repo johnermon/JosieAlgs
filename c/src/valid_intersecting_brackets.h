@@ -1,8 +1,12 @@
 #include "josieerror.h"
+#include "josieresult.h"
 #include "josievec.h"
 #include <stddef.h>
 #include <stdio.h>
 
+JOSIEOPTION(char)
+JOSIERESULT(char)
+JOSIEITER(char)
 JOSIEVEC(char)
 JOSIERESULT(bool)
 

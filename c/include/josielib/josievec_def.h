@@ -1,5 +1,6 @@
 #pragma once
 
+#include "josieiter_def.h"
 #include "josieoption.h"
 #include "josieresult.h"
 
@@ -8,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
 #define DEFINE_JOSIEVEC(T, DROP_FN)                                            \
@@ -19,15 +19,8 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
-  typedef struct JosieVecIter_##T {                                            \
-    T *curr;                                                                   \
-    T const *end;                                                              \
-  } JosieVecIter_##T;                                                          \
-                                                                               \
-  JOSIEOPTION(T)                                                               \
-  JOSIERESULT(T)                                                               \
   JOSIERESULT(JosieVec_##T)                                                    \
-  JOSIERESULT(JosieVecIter_##T)                                                \
+  JOSIERESULT(JosieIter_##T)                                                   \
                                                                                \
   JosieVec_##T static inline new_josievec_##T() {                              \
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \
@@ -125,30 +118,16 @@
     return (JosieResult_##T){.result = out, .error = OK};                      \
   }                                                                            \
                                                                                \
-  JosieResult_JosieVecIter_##T to_iter_##T(JosieVec_##T *restrict josievec,    \
-                                           size_t start, size_t end) {         \
+  JosieResult_JosieIter_##T josievec_to_iter_##T(                              \
+      JosieVec_##T *restrict josievec, size_t start, size_t end) {             \
                                                                                \
     if (start > end || start > josievec->len || end > josievec->len)           \
-      return (JosieResult_JosieVecIter_##T){.error = OUT_OF_BOUNDS};           \
+      return (JosieResult_JosieIter_##T){.error = OUT_OF_BOUNDS};              \
                                                                                \
     T *restrict ptr = josievec->ptr;                                           \
                                                                                \
-    JosieVecIter_##T iter =                                                    \
-        (JosieVecIter_##T){.curr = ptr + start, .end = ptr + end};             \
+    JosieIter_##T iter =                                                       \
+        (JosieIter_##T){.curr = ptr + start, .end = ptr + end};                \
                                                                                \
-    return (JosieResult_JosieVecIter_##T){.result = iter, .error = OK};        \
-  }                                                                            \
-                                                                               \
-  JosieOption_ptr_##T josievec_iter_next_##T(                                  \
-      JosieVecIter_##T *restrict josievec_iter) {                              \
-    T *restrict curr = josievec_iter->curr;                                    \
-                                                                               \
-    if (curr == josievec_iter->end) {                                          \
-      josievec_iter->curr = NULL;                                              \
-      josievec_iter->end = NULL;                                               \
-      return (JosieOption_ptr_##T){.exists = false};                           \
-    }                                                                          \
-                                                                               \
-    josievec_iter->curr++;                                                     \
-    return (JosieOption_ptr_##T){.element = curr, .exists = true};             \
+    return (JosieResult_JosieIter_##T){.result = iter, .error = OK};           \
   }\
