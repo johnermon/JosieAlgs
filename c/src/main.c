@@ -20,7 +20,7 @@ int main() {
     const char *string = brackets[i];
     JosieResult_bool output = valid_intersecting_brackets(string);
     if (josie_try(output.error, &result))
-      goto cleanup;
+      goto end;
 
     if (output.result)
       printf("%s is a valid input\n", string);
@@ -51,5 +51,6 @@ int main() {
 
 cleanup:
   drop_josievec_int(&josievec);
+end:
   return josie_handle_error(result);
 }
