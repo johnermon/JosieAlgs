@@ -38,7 +38,7 @@ int main() {
     printf("cap is %zu \n", josievec.cap);
   }
 
-  printf("Popping\n");
+  printf("Iterator\n");
 
   JosieResult_JosieIter_int iter =
       josievec_to_iter_int(&josievec, 0, josievec.len);

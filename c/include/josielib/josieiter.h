@@ -6,7 +6,7 @@
     T const *end;                                                              \
   } JosieIter_##T;                                                             \
                                                                                \
-  JosieOption_ptr_##T josieiter_next_##T(JosieIter_##T *restrict josievec_iter);
+  JosieOption_ptr_##T josieiter_next_##T(JosieIter_##T *restrict josieiter);
 
 #define JosieIterate(T, elem, iter)                                            \
   JosieOption_ptr_##T elem = josieiter_next_##T(iter);                         \
