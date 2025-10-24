@@ -1,6 +1,8 @@
 #pragma once
 
-#define JOSIEITER(T)                                                           \
+#define JosieIter(T) JosieIter_##T
+
+#define USE_JOSIEITER(T)                                                       \
   typedef struct JosieIter_##T {                                               \
     T *curr;                                                                   \
     T const *end;                                                              \
@@ -8,7 +10,7 @@
                                                                                \
   JosieOption_ptr_##T josieiter_next_##T(JosieIter_##T *restrict josieiter);
 
-#define JosieIterate(T, elem, iter)                                            \
-  JosieOption_ptr_##T elem = josieiter_next_##T(iter);                         \
+#define JosieIterate(T, elem, next_fn)                                         \
+  JosieOption_ptr_##T elem = next_fn;                                          \
   elem.exists;                                                                 \
-  elem = josieiter_next_##T(iter)
+  elem = next_fn

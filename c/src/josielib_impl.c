@@ -4,12 +4,12 @@
 #include "josieoption.h"
 #include "josievec_def.h"
 
-JOSIEOPTION(int)
-JOSIERESULT(int)
+USE_JOSIEOPTION(int)
+USE_JOSIERESULT(int)
 DEFINE_JOSIEITER(int)
 DEFINE_JOSIEVEC(int, drop_noop)
 
-JOSIEOPTION(char)
-JOSIERESULT(char)
+USE_JOSIEOPTION(char)
+USE_JOSIERESULT(char)
 DEFINE_JOSIEITER(char)
 DEFINE_JOSIEVEC(char, drop_noop)

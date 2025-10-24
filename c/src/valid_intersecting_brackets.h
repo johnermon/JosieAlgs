@@ -4,16 +4,16 @@
 #include <stddef.h>
 #include <stdio.h>
 
-JOSIEOPTION(char)
-JOSIERESULT(char)
-JOSIEITER(char)
-JOSIEVEC(char)
-JOSIERESULT(bool)
+USE_JOSIEOPTION(char)
+USE_JOSIERESULT(char)
+USE_JOSIEITER(char)
+USE_JOSIEVEC(char)
+USE_JOSIERESULT(bool)
 
-static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
+static inline JosieResult(bool) valid_intersecting_brackets(const char *input) {
   JosieError result = OK;
 
-  JosieVec_char stack = new_josievec_char();
+  JosieVec(char) stack = new_josievec_char();
   bool valid = false;
 
   for (const char *p = input; *p; p++) {
@@ -66,5 +66,5 @@ static inline JosieResult_bool valid_intersecting_brackets(const char *input) {
 
 cleanup:
   drop_josievec_char(&stack);
-  return (JosieResult_bool){.error = result, .result = valid};
+  return (JosieResult(bool)){.error = result, .result = valid};
 }

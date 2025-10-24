@@ -1,6 +1,8 @@
 #pragma once
 
-#define JOSIERESULT(T)                                                         \
+#define JosieResult(T) JosieResult_##T
+
+#define USE_JOSIERESULT(T)                                                     \
   typedef struct JosieResult_##T {                                             \
     T result;                                                                  \
     JosieError error;                                                          \

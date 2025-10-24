@@ -19,8 +19,8 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
-  JOSIERESULT(JosieVec_##T)                                                    \
-  JOSIERESULT(JosieIter_##T)                                                   \
+  USE_JOSIERESULT(JosieVec_##T)                                                \
+  USE_JOSIERESULT(JosieIter_##T)                                               \
                                                                                \
   JosieVec_##T static inline new_josievec_##T() {                              \
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \

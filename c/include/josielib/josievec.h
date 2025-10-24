@@ -5,9 +5,11 @@
 #include "josieoption.h"
 #include "josieresult.h"
 
+#define JosieVec(T) JosieVec_##T
+
 // generic definition for josievec, T is generic type, DROP_FN is the function
 // to call on drop.
-#define JOSIEVEC(T)                                                            \
+#define USE_JOSIEVEC(T)                                                        \
                                                                                \
   typedef struct {                                                             \
     T *ptr;                                                                    \
@@ -15,8 +17,8 @@
     size_t cap;                                                                \
   } JosieVec_##T;                                                              \
                                                                                \
-  JOSIERESULT(JosieVec_##T)                                                    \
-  JOSIERESULT(JosieIter_##T)                                                   \
+  USE_JOSIERESULT(JosieVec_##T)                                                \
+  USE_JOSIERESULT(JosieIter_##T)                                               \
                                                                                \
   JosieVec_##T static const inline new_josievec_##T() {                        \
     return (JosieVec_##T){.ptr = NULL, .len = 0, .cap = 0};                    \

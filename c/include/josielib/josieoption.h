@@ -2,7 +2,9 @@
 
 #include <stdbool.h>
 
-#define JOSIEOPTION(T)                                                         \
+#define JosieOption(T) JosieOption_##T
+
+#define USE_JOSIEOPTION(T)                                                     \
                                                                                \
   typedef struct JosieOption_##T {                                             \
     T element;                                                                 \
