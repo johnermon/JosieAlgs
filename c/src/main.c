@@ -42,10 +42,10 @@ int main() {
 
   printf("Iterator\n");
 
-  JosieResult(JosieIter_int) iter;
-  if (iter = josievec_to_iter_int(&josievec, 0, josievec.len),
-      josie_try(iter.error, &result))
-
+  JosieResult(JosieIter_int) iter = 
+    josievec_to_iter_int(&josievec, 0, josievec.len);
+    
+  if (iterjosie_try(iter.error, &result))
     goto cleanup;
 
   for (JosieIterate(int, elem, josieiter_next_int(&iter.result)))
